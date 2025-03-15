@@ -10,13 +10,13 @@ namespace ShootEmUp
         private GameObject character;
 
         [SerializeField]
-        private CharacterController characterController;
+        private ShootComponent _shootComponent;
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                characterController._fireRequired = true;
+                _shootComponent.isFireRequired = true;
             }
 
             if (Input.GetKey(KeyCode.LeftArrow))

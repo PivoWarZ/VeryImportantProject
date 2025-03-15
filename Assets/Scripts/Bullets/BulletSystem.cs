@@ -5,21 +5,21 @@ namespace ShootEmUp
 {
     public sealed class BulletSystem : MonoBehaviour
     {
-        [SerializeField]
-        private int initialCount = 50;
+        //[SerializeField]
+        //private int initialCount = 50;
         
-        [SerializeField] private Transform container;
+        [SerializeField] private SpawnerBullet _spawner;
         [SerializeField] private Bullet bulletPrefab;
         [SerializeField] private Transform worldTransform;
         [SerializeField] private LevelBounds bulletLevelBounds;
 
-        private readonly Queue<Bullet> bulletPool = new();
+        
         private readonly HashSet<Bullet> activeBullets = new();
         private readonly List<Bullet> removeBulletList = new();
         
         private void Awake()
         {
-            CreateBulletPool(initialCount, this.bulletPrefab, this.container);
+            //CreateBulletPool(initialCount, this.bulletPrefab, this.container);
         }
         
         private void FixedUpdate()
@@ -39,7 +39,9 @@ namespace ShootEmUp
 
         public void FlyBulletBySample(BulletSample bulletSample)
         {
-            if (this.bulletPool.TryDequeue(out var bullet))
+            var bullet = _spawner.TryDequeueBulletInPool();
+
+            if (bullet != null)
             {
                 bullet.transform.SetParent(this.worldTransform);
             }
@@ -72,27 +74,19 @@ namespace ShootEmUp
             if (this.activeBullets.Remove(bullet))
             {
                 bullet.OnCollisionEntered -= this.OnBulletCollision;
-                bullet.transform.SetParent(this.container);
-                this.bulletPool.Enqueue(bullet);
+                bullet.transform.SetParent(_spawner.GetContainerTransform());
+                _spawner.AddBulletInPool(bullet);
             }
         }
 
-        private void CreateBulletPool(int initialCount, Bullet bulletPrefab, Transform pool)
-        {
-            for (var i = 0; i < initialCount; i++)
-            {
-                var bullet = Instantiate(bulletPrefab, pool);
-            }
-        }
+        //private void CreateBulletPool(int initialCount, Bullet bulletPrefab, Transform pool)
+        //{
+        //    for (var i = 0; i < initialCount; i++)
+        //    {
+        //        var bullet = Instantiate(bulletPrefab, pool);
+        //    }
+        //}
 
-        public struct BulletSample
-        {
-            public Vector2 position;
-            public Vector2 velocity;
-            public Color color;
-            public int physicsLayer;
-            public int damage;
-            public bool isPlayer;
-        }
+
     }
 }
