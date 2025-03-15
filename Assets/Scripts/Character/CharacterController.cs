@@ -35,7 +35,7 @@ namespace ShootEmUp
         private void OnFlyBullet()
         {
             var weapon = this.character.GetComponent<WeaponComponent>();
-            _bulletSystem.FlyBulletByArgs(new BulletSystem.Args
+            _bulletSystem.FlyBulletByCreation(new BulletSystem.BulletCreation
             {
                 isPlayer = true,
                 physicsLayer = (int) this._bulletConfig.physicsLayer,
