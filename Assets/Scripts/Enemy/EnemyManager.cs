@@ -11,14 +11,18 @@ namespace ShootEmUp
 
         [SerializeField]
         private BulletSystem _bulletSystem;
-        
+        [SerializeField]
+        private float _spawnTime = 3f;
         private readonly HashSet<GameObject> m_activeEnemies = new();
+        private int _hitPoints;
+
 
         private IEnumerator Start()
         {
+
             while (true)
             {
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(_spawnTime);
                 var enemy = this._enemyPool.SpawnEnemy();
                 if (enemy != null)
                 {
@@ -26,6 +30,7 @@ namespace ShootEmUp
                     {
                         enemy.GetComponent<HitPointsComponent>().hpEmpty += this.OnDestroyed;
                         enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
+                        _hitPoints = enemy.GetComponent<HitPointsComponent>().GetHitPoints();
                     }    
                 }
             }
@@ -37,8 +42,9 @@ namespace ShootEmUp
             {
                 enemy.GetComponent<HitPointsComponent>().hpEmpty -= this.OnDestroyed;
                 enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
-
+                enemy.GetComponent<HitPointsComponent>().SetHitPoints(_hitPoints);
                 _enemyPool.UnspawnEnemy(enemy);
+
             }
         }
 

@@ -1,24 +1,28 @@
-using ShootEmUp;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolContainer : MonoBehaviour
+namespace ShootEmUp
 {
-    private readonly Queue<Bullet> _bulletPool = new();
-    public Transform GetContainerTransform()
+    public class PoolContainer : MonoBehaviour
     {
-        return this.transform;
-    }
+        [SerializeField] private Transform _poolContainer;
 
-    public Bullet TryDequeueBulletInPool()
-    {
-        _bulletPool.TryDequeue(out Bullet bullet);
+        private readonly Queue<Bullet> _bulletPool = new();
+        public Transform GetContainerTransform()
+        {
+            return this.transform;
+        }
 
-        return bullet;
-    }
+        public Bullet TryDequeueBulletInPool()
+        {
+            _bulletPool.TryDequeue(out Bullet bullet);
 
-    public void AddBulletInPool(Bullet bullet)
-    {
-        _bulletPool.Enqueue(bullet);
+            return bullet;
+        }
+
+        public void AddBulletInPool(Bullet bullet)
+        {
+            _bulletPool.Enqueue(bullet);
+        }
     }
 }

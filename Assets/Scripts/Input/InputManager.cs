@@ -1,3 +1,4 @@
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -7,7 +8,7 @@ namespace ShootEmUp
         public float HorizontalDirection { get; private set; }
 
         [SerializeField]
-        private GameObject character;
+        private GameObject _character;
 
         [SerializeField]
         private ShootComponent _shootComponent;
@@ -35,7 +36,7 @@ namespace ShootEmUp
         
         private void FixedUpdate()
         {
-            this.character.GetComponent<MoveComponent>().MoveByRigidbodyVelocity(new Vector2(this.HorizontalDirection, 0) * Time.fixedDeltaTime);
+            this._character.GetComponent<MoveComponent>().MoveByRigidbodyVelocity(new Vector2(this.HorizontalDirection, 0) * Time.fixedDeltaTime);
         }
     }
 }

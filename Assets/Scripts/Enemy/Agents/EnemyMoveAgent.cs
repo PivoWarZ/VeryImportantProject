@@ -11,13 +11,13 @@ namespace ShootEmUp
 
         [SerializeField] private MoveComponent moveComponent;
 
-        private Vector2 destination;
+        private Vector2 _destination;
 
         private bool isReached;
 
         public void SetDestination(Vector2 endPoint)
         {
-            this.destination = endPoint;
+            this._destination = endPoint;
             this.isReached = false;
         }
 
@@ -28,7 +28,7 @@ namespace ShootEmUp
                 return;
             }
             
-            var vector = this.destination - (Vector2) this.transform.position;
+            var vector = this._destination - (Vector2) this.transform.position;
             if (vector.magnitude <= 0.25f)
             {
                 this.isReached = true;

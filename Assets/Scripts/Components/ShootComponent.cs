@@ -1,7 +1,8 @@
-using ShootEmUp;
 using UnityEngine;
 
-public class ShootComponent : MonoBehaviour
+namespace ShootEmUp
+{
+    public class ShootComponent : MonoBehaviour
 {
     [SerializeField] private BulletConfig _bulletConfig;
     [SerializeField] private BulletSystem _bulletSystem;
@@ -29,4 +30,5 @@ public class ShootComponent : MonoBehaviour
         });
 
     }
+}
 }
