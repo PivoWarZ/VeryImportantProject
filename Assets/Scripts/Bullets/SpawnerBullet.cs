@@ -6,12 +6,12 @@ namespace ShootEmUp
     {
         [SerializeField] private int _spawnCount;
         [SerializeField] private Bullet _prefab;
-        [SerializeField] private PoolContainer _container;
+        [SerializeField] private PoolContainer _poolContainer;
     
 
         private void Awake()
         {
-            CreateBulletPool(_spawnCount, _prefab, _container.transform);
+            CreateBulletPool(_spawnCount, _prefab, _poolContainer.transform);
         }
 
         private void CreateBulletPool(int initialCount, Bullet bulletPrefab, Transform pool)
@@ -19,7 +19,7 @@ namespace ShootEmUp
             for (var i = 0; i < initialCount; i++)
             {
                 var bullet = Instantiate(bulletPrefab, pool);
-                _container.AddBulletInPool(bullet);
+                _poolContainer.AddBulletInPool(bullet);
             }
         }
 
