@@ -5,23 +5,14 @@ namespace ShootEmUp
 {
     public sealed class BulletSystem : MonoBehaviour
     {
-        //[SerializeField]
-        //private int initialCount = 50;
-        
-        [SerializeField] private SpawnerBullet _spawner;
-        [SerializeField] private Bullet bulletPrefab;
-        [SerializeField] private Transform worldTransform;
-        [SerializeField] private LevelBounds bulletLevelBounds;
 
+        [SerializeField] private PoolContainer _poolContainer;
+        [SerializeField] private Bullet _bulletPrefab;
+        [SerializeField] private Transform _worldTransform;
+        [SerializeField] private LevelBounds _bulletLevelBounds;
         
         private readonly HashSet<Bullet> activeBullets = new();
         private readonly List<Bullet> removeBulletList = new();
-        
-        private void Awake()
-        {
-            //CreateBulletPool(initialCount, this.bulletPrefab, this.container);
-        }
-        
         private void FixedUpdate()
         {
             this.removeBulletList.Clear();
@@ -30,24 +21,23 @@ namespace ShootEmUp
             for (int i = 0, count = this.removeBulletList.Count; i < count; i++)
             {
                 var bullet = this.removeBulletList[i];
-                if (!this.bulletLevelBounds.InBounds(bullet.transform.position))
+                if (!this._bulletLevelBounds.InBounds(bullet.transform.position))
                 {
                     this.RemoveBullet(bullet);
                 }
             }
         }
-
         public void FlyBulletBySample(BulletSample bulletSample)
         {
-            var bullet = _spawner.TryDequeueBulletInPool();
+            var bullet = _poolContainer.TryDequeueBulletInPool();
 
-            if (bullet != null)
+            if (bullet)
             {
-                bullet.transform.SetParent(this.worldTransform);
+                bullet.transform.SetParent(this._worldTransform);
             }
             else
             {
-                bullet = Instantiate(this.bulletPrefab, this.worldTransform);
+                bullet = Instantiate(this._bulletPrefab, this._worldTransform);
             }
 
             bullet.SetPosition(bulletSample.position);
@@ -62,7 +52,6 @@ namespace ShootEmUp
                 bullet.OnCollisionEntered += this.OnBulletCollision;
             }
         }
-        
         private void OnBulletCollision(Bullet bullet, Collision2D collision)
         {
             BulletUtils.DealDamage(bullet, collision.gameObject);
@@ -74,19 +63,10 @@ namespace ShootEmUp
             if (this.activeBullets.Remove(bullet))
             {
                 bullet.OnCollisionEntered -= this.OnBulletCollision;
-                bullet.transform.SetParent(_spawner.GetContainerTransform());
-                _spawner.AddBulletInPool(bullet);
+                bullet.transform.SetParent(_poolContainer.GetContainerTransform());
+                _poolContainer.AddBulletInPool(bullet);
             }
         }
-
-        //private void CreateBulletPool(int initialCount, Bullet bulletPrefab, Transform pool)
-        //{
-        //    for (var i = 0; i < initialCount; i++)
-        //    {
-        //        var bullet = Instantiate(bulletPrefab, pool);
-        //    }
-        //}
-
 
     }
 }

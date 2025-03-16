@@ -21,11 +21,11 @@ namespace ShootEmUp
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                this.HorizontalDirection = -1;
+                this.HorizontalDirection = -Vector3.right.x;
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                this.HorizontalDirection = 1;
+                this.HorizontalDirection = Vector3.right.x;
             }
             else
             {
