@@ -6,6 +6,7 @@ namespace ShootEmUp
 {
     public sealed class EnemyManager : MonoBehaviour
     {
+        [SerializeField] private BulletConfig _bulletConfig;
         [SerializeField]
         private EnemyPool _enemyPool;
 
@@ -13,6 +14,7 @@ namespace ShootEmUp
         private BulletSystem _bulletSystem;
         [SerializeField]
         private float _spawnTime = 3f;
+        [SerializeField] private float _bulletlSpeed = 2f;
         private readonly HashSet<GameObject> m_activeEnemies = new();
         private int _hitPoints;
 
@@ -53,11 +55,11 @@ namespace ShootEmUp
             _bulletSystem.FlyBulletBySample(new BulletSample
             {
                 isPlayer = false,
-                physicsLayer = (int) PhysicsLayer.ENEMY,
-                color = Color.red,
-                damage = 1,
+                physicsLayer = (int)this._bulletConfig.physicsLayer,
+                color = _bulletConfig.color,
+                damage = this._bulletConfig.damage,
                 position = position,
-                velocity = direction * 2.0f
+                velocity = direction * _bulletConfig.speed,
             });
         }
     }
