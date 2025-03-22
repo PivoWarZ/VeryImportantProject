@@ -20,15 +20,15 @@ public class KeyBoardInput : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            OnKeyboardInputChanged(-Vector2.right * Time.fixedDeltaTime);
+            MovePosition(-Vector2.right * Time.fixedDeltaTime);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            OnKeyboardInputChanged(Vector2.right * Time.fixedDeltaTime);
+            MovePosition(Vector2.right * Time.fixedDeltaTime);
         }
         else
         {
-            OnKeyboardInputChanged(Vector2.zero);
+            MovePosition(Vector2.zero);
         }
 
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class InputManager : MonoBehaviour
+    public sealed class InputManager : MonoBehaviour, IStartGameListener
     {
 
         [SerializeField]
@@ -14,23 +14,16 @@ namespace ShootEmUp
 
         [SerializeField]
         private KeyBoardInput _keyBoardInput;
-        internal void StartGame()
+        void IStartGameListener.OnStartGame()
         {
             _keyBoardInput.OnShoot += _shootComponent.Shoot;
             _keyBoardInput.OnKeyboardInputChanged += _moveComponent.MoveByRigidbodyVelocity;
         }
-
-        //private void OnEnable()
-        //{
-        //    _keyBoardInput.OnShoot += _shootComponent.Shoot;
-        //    _keyBoardInput.OnKeyboardInputChanged += _moveComponent.MoveByRigidbodyVelocity;
-        //}
 
         private void OnDisable()
         {
             _keyBoardInput.OnShoot -= _shootComponent.Shoot;
             _keyBoardInput.OnKeyboardInputChanged -= _moveComponent.MoveByRigidbodyVelocity;
         }
-
     }   
 }

@@ -23,7 +23,7 @@ namespace ShootEmUp
         private GameObject _prefab;
 
         [SerializeField]
-        private int _spawnCount = 1;
+        private int _spawnCount = 20;
 
         private readonly Queue<GameObject> enemyPool = new();
         

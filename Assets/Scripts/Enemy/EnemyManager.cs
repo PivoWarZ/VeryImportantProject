@@ -4,24 +4,27 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour
+    public sealed class EnemyManager : MonoBehaviour, IStartGameListener
     {
-        [SerializeField] private BulletConfig _bulletConfig;
+        [SerializeField] 
+        private BulletConfig _bulletConfig;
+
         [SerializeField]
         private EnemyPool _enemyPool;
 
         [SerializeField]
         private BulletSystem _bulletSystem;
+
         [SerializeField]
         private float _spawnTime = 3f;
+
         [SerializeField] private float _bulletlSpeed = 2f;
+
         private readonly HashSet<GameObject> m_activeEnemies = new();
         private int _hitPoints;
 
-
-        private IEnumerator Start()
+        private IEnumerator CourutineToSpawn()
         {
-
             while (true)
             {
                 yield return new WaitForSeconds(_spawnTime);
@@ -33,7 +36,7 @@ namespace ShootEmUp
                         enemy.GetComponent<HitPointsComponent>().hpEmpty += this.OnDestroyed;
                         enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
                         _hitPoints = enemy.GetComponent<HitPointsComponent>().GetHitPoints();
-                    }    
+                    }
                 }
             }
         }
@@ -61,6 +64,11 @@ namespace ShootEmUp
                 position = position,
                 velocity = direction * _bulletConfig.speed,
             });
+        }
+
+        void IStartGameListener.OnStartGame()
+        {
+            StartCoroutine(CourutineToSpawn());
         }
     }
 }
