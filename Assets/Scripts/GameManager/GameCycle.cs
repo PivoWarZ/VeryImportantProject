@@ -5,16 +5,7 @@ namespace ShootEmUp
 {
     public class GameCycle : MonoBehaviour
     {
-        private List<IStartGameListener> _startList = new();
-
-        public void StartGame()
-        {
-            for (int i = 0; i < _startList.Count; i++)
-            {
-                IStartGameListener IStartGameListener = _startList[i];
-                IStartGameListener.OnStartGame();
-            }
-        }
+        private List<IGameIistener> _gameListenersList = new();
 
         private void Update()
         {
@@ -22,12 +13,51 @@ namespace ShootEmUp
             {
                 StartGame();
             }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
+            }
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                ResumeGame();
+            }
         }
 
-        public void AddStartGameListener(IStartGameListener startGameListener)
+        public void AddGameListener(IGameIistener gameListener)
         {
-            _startList.Add(startGameListener);
+            _gameListenersList.Add(gameListener);
         }
+        public void StartGame()
+        {
+            Debug.Log(_gameListenersList.ToString());
+            Debug.Log("StartGame");
+            foreach (IGameIistener gameListener in _gameListenersList)
+            {
+                if (gameListener is IStartGameListener startGameListener)
+                startGameListener.OnStartGame();
+            }
+        }
+
+        public void PauseGame()
+        {
+            Debug.Log("PauseGame");
+            foreach (IGameIistener gameListener in _gameListenersList)
+            {
+                if (gameListener is IPauseGameListener pauseGameListener)
+                    pauseGameListener.OnPauseGame();
+            }
+        }
+
+        public void ResumeGame()
+        {
+            Debug.Log("ResumeGame");
+            foreach (IGameIistener gameListener in _gameListenersList)
+            {
+                if (gameListener is IResumeGameListener resumeGameListener)
+                    resumeGameListener.OnResumeGame();
+            }
+        }
+
     }
 
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour, IStartGameListener
+    public sealed class EnemyManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener
     {
         [SerializeField] 
         private BulletConfig _bulletConfig;
@@ -66,9 +66,29 @@ namespace ShootEmUp
             });
         }
 
+        private IEnumerator Respawn()
+        { 
+            var startTime = _spawnTime;
+            _spawnTime = Time.time % _spawnTime;
+            StartCoroutine(CourutineToSpawn());
+            yield return new WaitForSeconds(_spawnTime);
+            _spawnTime = startTime;
+
+        }
+
         void IStartGameListener.OnStartGame()
         {
             StartCoroutine(CourutineToSpawn());
+        }
+
+        void IPauseGameListener.OnPauseGame()
+        {
+            StopAllCoroutines();
+        }
+
+        void IResumeGameListener.OnResumeGame()
+        {
+            StartCoroutine(Respawn());
         }
     }
 }

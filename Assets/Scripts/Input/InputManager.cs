@@ -14,16 +14,17 @@ namespace ShootEmUp
 
         [SerializeField]
         private KeyBoardInput _keyBoardInput;
-        void IStartGameListener.OnStartGame()
-        {
-            _keyBoardInput.OnShoot += _shootComponent.Shoot;
-            _keyBoardInput.OnKeyboardInputChanged += _moveComponent.MoveByRigidbodyVelocity;
-        }
 
         private void OnDisable()
         {
             _keyBoardInput.OnShoot -= _shootComponent.Shoot;
             _keyBoardInput.OnKeyboardInputChanged -= _moveComponent.MoveByRigidbodyVelocity;
+        }
+
+        void IStartGameListener.OnStartGame()
+        {
+            _keyBoardInput.OnShoot += _shootComponent.Shoot;
+            _keyBoardInput.OnKeyboardInputChanged += _moveComponent.MoveByRigidbodyVelocity;
         }
     }   
 }
