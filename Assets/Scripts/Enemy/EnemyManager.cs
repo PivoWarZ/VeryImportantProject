@@ -18,10 +18,11 @@ namespace ShootEmUp
         [SerializeField]
         private float _spawnTime = 3f;
 
-        [SerializeField] private float _bulletlSpeed = 2f;
+        [SerializeField] private float _bulletSpeed = 2f;
 
-        private readonly HashSet<GameObject> m_activeEnemies = new();
+        private readonly HashSet<GameObject> _activeEnemies = new();
         private int _hitPoints;
+        private float _startBulletSpeed;
 
         private IEnumerator CourutineToSpawn()
         {
@@ -31,7 +32,7 @@ namespace ShootEmUp
                 var enemy = this._enemyPool.SpawnEnemy();
                 if (enemy != null)
                 {
-                    if (this.m_activeEnemies.Add(enemy))
+                    if (this._activeEnemies.Add(enemy))
                     {
                         enemy.GetComponent<HitPointsComponent>().hpEmpty += this.OnDestroyed;
                         enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
@@ -43,7 +44,7 @@ namespace ShootEmUp
 
         private void OnDestroyed(GameObject enemy)
         {
-            if (m_activeEnemies.Remove(enemy))
+            if (_activeEnemies.Remove(enemy))
             {
                 enemy.GetComponent<HitPointsComponent>().hpEmpty -= this.OnDestroyed;
                 enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
@@ -84,10 +85,21 @@ namespace ShootEmUp
         void IPauseGameListener.OnPauseGame()
         {
             StopAllCoroutines();
+            foreach (var enemy in _activeEnemies)
+            {
+                _startBulletSpeed = _bulletSpeed;
+                enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
+                enemy.GetComponent<EnemyMoveAgent>().isReached = true;
+            }
         }
 
         void IResumeGameListener.OnResumeGame()
         {
+            foreach (var enemy in _activeEnemies)
+            {
+                enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
+                enemy.GetComponent<EnemyMoveAgent>().isReached = false;
+            }
             StartCoroutine(Respawn());
         }
     }
