@@ -27,7 +27,7 @@ namespace ShootEmUp
 
         private void FixedUpdate()
         {
-            if (!this._moveAgent.isReached)
+            if (!this._moveAgent.IsReached)
             {
                 return;
             }

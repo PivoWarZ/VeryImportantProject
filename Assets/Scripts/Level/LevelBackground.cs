@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class LevelBackground : MonoBehaviour
+    public sealed class LevelBackground : MonoBehaviour, IPauseGameListener, IResumeGameListener
     {
         private float startPositionY;
 
@@ -47,6 +47,16 @@ namespace ShootEmUp
                 this.movingSpeedY * Time.fixedDeltaTime,
                 this.positionZ
             );
+        }
+
+        void IPauseGameListener.OnPauseGame()
+        {
+            this.movingSpeedY = 0;
+        }
+
+        void IResumeGameListener.OnResumeGame()
+        {
+            this.movingSpeedY = this.m_params.m_movingSpeedY;
         }
 
         [Serializable]

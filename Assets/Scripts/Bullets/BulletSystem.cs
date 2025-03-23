@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class BulletSystem : MonoBehaviour
+    public sealed class BulletSystem : MonoBehaviour, IPauseGameListener, IResumeGameListener
     {
 
         [SerializeField] private PoolContainer _poolContainer;
@@ -68,5 +68,20 @@ namespace ShootEmUp
             }
         }
 
+        void IResumeGameListener.OnResumeGame()
+        {
+            foreach (var bullet in activeBullets)
+            {
+                bullet.GetComponent<Rigidbody2D>().simulated = true;
+            }
+        }
+
+        void IPauseGameListener.OnPauseGame()
+        {
+            foreach (var bullet in activeBullets)
+            {
+                bullet.GetComponent<Rigidbody2D>().simulated = false;
+            }
+        }
     }
 }

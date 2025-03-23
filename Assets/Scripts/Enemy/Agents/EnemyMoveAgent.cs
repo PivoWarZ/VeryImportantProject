@@ -13,7 +13,7 @@ namespace ShootEmUp
 
         private Vector2 _destination;
 
-        public bool isReached;
+        private bool isReached;
 
         public void SetDestination(Vector2 endPoint)
         {

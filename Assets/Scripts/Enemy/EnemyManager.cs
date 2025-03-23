@@ -18,11 +18,9 @@ namespace ShootEmUp
         [SerializeField]
         private float _spawnTime = 3f;
 
-        [SerializeField] private float _bulletSpeed = 2f;
-
         private readonly HashSet<GameObject> _activeEnemies = new();
+
         private int _hitPoints;
-        private float _startBulletSpeed;
 
         private IEnumerator CourutineToSpawn()
         {
@@ -67,7 +65,7 @@ namespace ShootEmUp
             });
         }
 
-        private IEnumerator Respawn()
+        private IEnumerator StartAfterPause()
         { 
             var startTime = _spawnTime;
             _spawnTime = Time.time % _spawnTime;
@@ -85,22 +83,23 @@ namespace ShootEmUp
         void IPauseGameListener.OnPauseGame()
         {
             StopAllCoroutines();
+
             foreach (var enemy in _activeEnemies)
             {
-                _startBulletSpeed = _bulletSpeed;
                 enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
-                enemy.GetComponent<EnemyMoveAgent>().isReached = true;
+                enemy.GetComponent<Rigidbody2D>().simulated = false;
             }
         }
 
         void IResumeGameListener.OnResumeGame()
         {
+            StartCoroutine(StartAfterPause());
+
             foreach (var enemy in _activeEnemies)
             {
                 enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
-                enemy.GetComponent<EnemyMoveAgent>().isReached = false;
+                enemy.GetComponent<Rigidbody2D>().simulated = true;
             }
-            StartCoroutine(Respawn());
         }
     }
 }

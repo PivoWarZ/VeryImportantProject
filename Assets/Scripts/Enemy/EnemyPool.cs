@@ -34,6 +34,11 @@ namespace ShootEmUp
                 var enemy = Instantiate(this._prefab, this._container);
                 this.enemyPool.Enqueue(enemy);
             }
+
+            if (_spawnCount > _enemyPositions.GetAttackPosition().Count-1)
+            {
+                _spawnCount = _enemyPositions.GetAttackPosition().Count-1;
+            }
         }
 
         public GameObject SpawnEnemy()

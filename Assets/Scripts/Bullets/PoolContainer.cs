@@ -24,5 +24,7 @@ namespace ShootEmUp
         {
             _bulletPool.Enqueue(bullet);
         }
+
+
     }
 }

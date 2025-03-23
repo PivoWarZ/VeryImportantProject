@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,20 +7,31 @@ namespace ShootEmUp
     public class GameCycle : MonoBehaviour
     {
         private List<IGameIistener> _gameListenersList = new();
+        enum Cycle
+        {
+           NotStarted,
+           StartGame,
+           PauseGame,
+        }
+
+        Cycle CycleGame;
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Backspace))
+            if (Input.anyKeyDown && CycleGame == Cycle.NotStarted)
             {
                 StartGame();
+                CycleGame = Cycle.StartGame;
             }
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) && CycleGame == Cycle.StartGame)
             {
                 PauseGame();
+                CycleGame = Cycle.PauseGame;
             }
-            if (Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab) && CycleGame == Cycle.PauseGame)
             {
                 ResumeGame();
+                CycleGame = Cycle.StartGame;
             }
         }
 
@@ -29,7 +41,6 @@ namespace ShootEmUp
         }
         public void StartGame()
         {
-            Debug.Log(_gameListenersList.ToString());
             Debug.Log("StartGame");
             foreach (IGameIistener gameListener in _gameListenersList)
             {
