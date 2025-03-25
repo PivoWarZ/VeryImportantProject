@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyAttackAgent : MonoBehaviour
+    public sealed class EnemyAttackAgent : MonoBehaviour, IFixedUpdateGameListener
     {
         public event Action<GameObject, Vector2, Vector2> OnFire;
 
@@ -24,7 +24,7 @@ namespace ShootEmUp
             _currentTime = _countdown;
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate(float fixedDeltaTime)
         {
             if (!_moveAgent.IsReached)
             {

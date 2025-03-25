@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyMoveAgent : MonoBehaviour
+    public sealed class EnemyMoveAgent : MonoBehaviour, IFixedUpdateGameListener
     {
         [SerializeField] private MoveComponent _moveComponent;
 
@@ -31,7 +31,7 @@ namespace ShootEmUp
             _attackPosition = attackPosition;
         }
 
-        private void FixedUpdate()
+        public void OnFixedUpdate(float fixedDeltaTime)
         {
 
             if (isReached)

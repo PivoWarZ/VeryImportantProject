@@ -9,22 +9,14 @@ namespace ShootEmUp
             [SerializeField] private WeaponComponent _weapon;
 
             private bool isFireRequired;
-        void IFixedUpdateGameListener.OnFixedUpdate(float fixedDeltaTime)
-        {
-            if (isFireRequired)
+            void IFixedUpdateGameListener.OnFixedUpdate(float fixedDeltaTime)
             {
-                OnFlyBullet();
-                isFireRequired = false;
+                if (isFireRequired)
+                {
+                    OnFlyBullet();
+                    isFireRequired = false;
+                }
             }
-        }
-            //private void FixedUpdate()
-            //{
-            //    if (isFireRequired)
-            //    {
-            //        OnFlyBullet();
-            //        isFireRequired = false;
-            //    }
-            //}
 
             private void OnFlyBullet()
             {
@@ -43,6 +35,5 @@ namespace ShootEmUp
             { 
                 isFireRequired = true;
             }
-
-    }   
+        }   
 }
