@@ -16,16 +16,13 @@ namespace ShootEmUp
         public bool TryGetRandomAttackPosition(out Transform attackPosition)
         {
             attackPosition = TakeFreeTransform(_attackPositions);
-            Debug.Log(attackPosition);
 
             if (attackPosition == null)
             {
-                Debug.Log("FALSE");
                 return false;
             }
             else
             {
-                Debug.Log("RETURN");
                 return true;
             }
         }
@@ -40,20 +37,6 @@ namespace ShootEmUp
                 return transforms[index];
 
         }
-
-        //private bool GetFreeTransform(List<Transform> transforms, out Transform attackPosition)
-        //{
-        //    if (transforms.Count == 0)
-        //    {
-        //        return attackPosition = null;
-        //    }
-
-        //    var index = Random.Range(0, transforms.Count);
-        //    attackPosition = transforms[index];
-        //    _attackPositions.Remove(transforms[index]);
-        //    return attackPosition;
-        //}
-
 
         private Transform TakeFreeTransform(List<Transform> transforms)
         {

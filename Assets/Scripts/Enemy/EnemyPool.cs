@@ -28,26 +28,23 @@ namespace ShootEmUp
 
         public GameObject SpawnEnemy()
         {
-            Debug.Log("Spawn");
             if (!_enemyPool.TryDequeue(out var enemy))
             {
-                Debug.Log("TryDequeue");
                 return null;
             }
 
             if (_enemyPositions.TryGetRandomAttackPosition(out Transform attackPosition))
             {
-                Debug.Log("AttackPosition = " + attackPosition.position);
                 enemy.transform.SetParent(_worldTransform);
                 var spawnPosition = _enemyPositions.RandomSpawnPosition();
                 enemy.transform.position = spawnPosition.position;
                 enemy.GetComponent<EnemyAttackAgent>().SetTarget(_character);
                 enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
+                enemy.GetComponent<EnemyMoveAgent>().SetAttackPosition(attackPosition);
                 return enemy;
             }
             else
             {
-                Debug.Log("SpawnNULL");
                 return null;
             }
         }
@@ -56,8 +53,8 @@ namespace ShootEmUp
         {
             var atttackPosition = enemy.GetComponent<EnemyMoveAgent>().AttackPosition;
             _enemyPositions.AddAttackPosition(atttackPosition);
-            enemy.transform.SetParent(this._container);
-            this._enemyPool.Enqueue(enemy);
+            enemy.transform.SetParent(_container);
+            _enemyPool.Enqueue(enemy);
         }
     }
 }

@@ -19,14 +19,16 @@ namespace ShootEmUp
         {
             get { return _attackPosition; }
         }
+
         public void SetDestination(Vector2 endPoint)
         {
-            Debug.Log(endPoint);
             _destination = endPoint;
-            Debug.Log("des " + _destination);
-            //_attackPosition = endPoint;
-            Debug.Log(_attackPosition);
             isReached = false;
+        }
+
+        public void SetAttackPosition(Transform attackPosition)
+        { 
+            _attackPosition = attackPosition;
         }
 
         private void FixedUpdate()

@@ -17,7 +17,6 @@ namespace ShootEmUp
         public void SetTarget(GameObject target)
         {
             _target = target;
-            Debug.Log(_target);
         }
 
         public void Reset()
