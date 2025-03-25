@@ -3,9 +3,13 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class GameCycle : MonoBehaviour
+    public class GameCycle : MonoBehaviour, IUpdateGameListener
     {
-        private List<IGameIistener> _gameListenersList = new();
+        private List<IGameIistener> _gameListeners = new();
+        private List<IUpdateGameListener> _updateGameListeners = new();
+        private List<IFixedUpdateGameListener> _fixedUpdateGameListeners = new();
+        private List<ILateUpdateGameListener> _lateUpdateGameListeners = new();
+
         enum Cycle
         {
            NotStarted,
@@ -17,35 +21,98 @@ namespace ShootEmUp
 
         private void Update()
         {
-            if (Input.anyKeyDown && CurrentGameCycle == Cycle.NotStarted)
+
+            float deltaTime = Time.deltaTime;
+
+            foreach (var gameListener in _updateGameListeners)
             {
+                gameListener.OnUpdate(deltaTime);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            float fixeddeltaTime = Time.fixedDeltaTime;
+
+            foreach (var gameListener in _fixedUpdateGameListeners)
+            {
+                gameListener.OnFixedUpdate(fixeddeltaTime);
+            }
+        }
+
+        private void LateUpdate()
+        {
+            float deltaTime = Time.deltaTime;
+
+            foreach (var gameListener in _lateUpdateGameListeners)
+            {
+                gameListener.OnLateUpdate(deltaTime);
+            }
+        }
+        void IUpdateGameListener.OnUpdate(float deltaTime)
+        {
+            GameCycleInput();
+        }
+
+        private void GameCycleInput()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (CurrentGameCycle != Cycle.NotStarted)
+                { 
+                    return;
+                }
+
                 StartGame();
-                CurrentGameCycle = Cycle.StartGame;
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) && CurrentGameCycle == Cycle.StartGame)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
+                if (CurrentGameCycle != Cycle.StartGame)
+                {
+                    return;
+                }
+
                 PauseGame();
-                CurrentGameCycle = Cycle.PauseGame;
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab) && CurrentGameCycle == Cycle.PauseGame)
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
+                if (CurrentGameCycle != Cycle.PauseGame)
+                {
+                    return;
+                }
+
                 ResumeGame();
-                CurrentGameCycle = Cycle.StartGame;
             }
         }
 
         public void AddGameListener(IGameIistener gameListener)
         {
-            _gameListenersList.Add(gameListener);
+            _gameListeners.Add(gameListener);
+
+            if (gameListener is IUpdateGameListener updateGameListener)
+            {
+                _updateGameListeners.Add(updateGameListener);
+            }
+
+            if (gameListener is IFixedUpdateGameListener fixedUpdateGameListener)
+            {
+                _fixedUpdateGameListeners.Add(fixedUpdateGameListener);
+            }
+
+            if (gameListener is ILateUpdateGameListener latedUpdateGameListener)
+            {
+                _lateUpdateGameListeners.Add(latedUpdateGameListener);
+            }
         }
 
         public void StartGame()
         {
             Debug.Log("StartGame");
-        
-            foreach (IGameIistener gameListener in _gameListenersList)
+            CurrentGameCycle = Cycle.StartGame;
+
+            foreach (IGameIistener gameListener in _gameListeners)
             {
                 if (gameListener is IStartGameListener startGameListener)
                 { 
@@ -57,8 +124,9 @@ namespace ShootEmUp
         public void PauseGame()
         {
             Debug.Log("PauseGame");
+            CurrentGameCycle = Cycle.PauseGame;
 
-            foreach (IGameIistener gameListener in _gameListenersList)
+            foreach (IGameIistener gameListener in _gameListeners)
             {
                 if (gameListener is IPauseGameListener pauseGameListener)
                 { 
@@ -70,8 +138,9 @@ namespace ShootEmUp
         public void ResumeGame()
         {
             Debug.Log("ResumeGame");
+            CurrentGameCycle = Cycle.StartGame;
 
-            foreach (IGameIistener gameListener in _gameListenersList)
+            foreach (IGameIistener gameListener in _gameListeners)
             {
                 if (gameListener is IResumeGameListener resumeGameListener)
                 { 
@@ -79,7 +148,5 @@ namespace ShootEmUp
                 }
             }
         }
-
     }
-
 }

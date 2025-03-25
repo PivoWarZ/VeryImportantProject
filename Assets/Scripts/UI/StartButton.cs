@@ -3,14 +3,14 @@ using UnityEngine.UI;
 
 namespace ShootEmUp
 {
-public class StartButton : MonoBehaviour, IStartGameListener
-{
-    [SerializeField] Button _pauseButton;
-    void IStartGameListener.OnStartGame()
+    public class StartButton : MonoBehaviour, IStartGameListener
     {
-        _pauseButton.gameObject.SetActive(true);
-        Destroy(this.gameObject);
+        [SerializeField] Button _pauseButton;
+        void IStartGameListener.OnStartGame()
+        {
+            _pauseButton.gameObject.SetActive(true);
+            Destroy(this.gameObject);
+        }
     }
-}
 
 }

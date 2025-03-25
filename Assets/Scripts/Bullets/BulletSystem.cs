@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class BulletSystem : MonoBehaviour, IPauseGameListener, IResumeGameListener
+    public sealed class BulletSystem : MonoBehaviour, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener
     {
 
         [SerializeField] private PoolContainer _poolContainer;
@@ -13,7 +13,8 @@ namespace ShootEmUp
         
         private readonly HashSet<Bullet> _activeBullets = new();
         private readonly List<Bullet> _removeBulletsList = new();
-        private void FixedUpdate()
+
+        void IFixedUpdateGameListener.OnFixedUpdate(float fixedDeltaTime)
         {
             _removeBulletsList.Clear();
             _removeBulletsList.AddRange(_activeBullets);
@@ -27,6 +28,7 @@ namespace ShootEmUp
                 }
             }
         }
+
         public void FlyBulletBySample(BulletSample bulletSample)
         {
             var bullet = _poolContainer.TryDequeueBulletInPool();
@@ -52,6 +54,7 @@ namespace ShootEmUp
                 bullet.OnCollisionEntered += OnBulletCollision;
             }
         }
+
         private void OnBulletCollision(Bullet bullet, Collision2D collision)
         {
             BulletUtils.DealDamage(bullet, collision.gameObject);
@@ -83,5 +86,6 @@ namespace ShootEmUp
                 bullet.GetComponent<Rigidbody2D>().simulated = false;
             }
         }
+
     }
 }

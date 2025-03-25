@@ -3,14 +3,13 @@ using UnityEngine.UI;
 
 namespace ShootEmUp
 {
-public class Canvas : MonoBehaviour
-{
-    [SerializeField] Button _startButon;
-
-    private void Awake()
+    public class Canvas : MonoBehaviour
     {
-        _startButon.gameObject.SetActive(true);
-    }
-}
+        [SerializeField] Button _startButon;
 
+        private void Awake()
+        {
+            _startButon.gameObject.SetActive(true);
+        }
+    }
 }

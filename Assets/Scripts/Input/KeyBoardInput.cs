@@ -1,12 +1,13 @@
+using ShootEmUp;
 using System;
 using UnityEngine;
 
-public class KeyBoardInput : MonoBehaviour
+public class KeyBoardInput : MonoBehaviour, IUpdateGameListener
 {
     public event Action OnShoot;
     public event Action<Vector2> OnKeyboardInputChanged;
 
-    private void Update()
+    void IUpdateGameListener.OnUpdate(float deltaTime)
     {
         KeyBoardInputChanged();
     }
@@ -41,4 +42,5 @@ public class KeyBoardInput : MonoBehaviour
     {
         OnKeyboardInputChanged?.Invoke(direction);
     }
+
 }

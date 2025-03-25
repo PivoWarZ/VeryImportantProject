@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class LevelBackground : MonoBehaviour, IPauseGameListener, IResumeGameListener
+    public sealed partial class LevelBackground : MonoBehaviour, IPauseGameListener, IResumeGameListener
     {
-        [SerializeField] private Params m_params;
+        [SerializeField] private Params _params;
 
         private Transform myTransform;
         private float startPositionY;
@@ -16,54 +15,41 @@ namespace ShootEmUp
 
         private void Awake()
         {
-            this.startPositionY = this.m_params.m_startPositionY;
-            this.endPositionY = this.m_params.m_endPositionY;
-            this.movingSpeedY = this.m_params.m_movingSpeedY;
-            this.myTransform = this.transform;
-            var position = this.myTransform.position;
-            this.positionX = position.x;
-            this.positionZ = position.z;
+            startPositionY = _params.StartPositionY;
+            endPositionY = _params.EndPositionY;
+            movingSpeedY = _params.MovingSpeedY;
+            myTransform = transform;
+            var position = myTransform.position;
+            positionX = position.x;
+            positionZ = position.z;
         }
 
         private void FixedUpdate()
         {
-            if (this.myTransform.position.y <= this.endPositionY)
+            if (myTransform.position.y <= endPositionY)
             {
-                this.myTransform.position = new Vector3(
-                    this.positionX,
-                    this.startPositionY,
-                    this.positionZ
+                myTransform.position = new Vector3(
+                    positionX,
+                    startPositionY,
+                    positionZ
                 );
             }
 
-            this.myTransform.position -= new Vector3(
-                this.positionX,
-                this.movingSpeedY * Time.fixedDeltaTime,
-                this.positionZ
+            myTransform.position -= new Vector3(
+                positionX,
+                movingSpeedY * Time.fixedDeltaTime,
+                positionZ
             );
         }
 
         void IPauseGameListener.OnPauseGame()
         {
-            this.movingSpeedY = 0;
+            movingSpeedY = 0;
         }
 
         void IResumeGameListener.OnResumeGame()
         {
-            this.movingSpeedY = this.m_params.m_movingSpeedY;
-        }
-
-        [Serializable]
-        public sealed class Params
-        {
-            [SerializeField]
-            public float m_startPositionY;
-
-            [SerializeField]
-            public float m_endPositionY;
-
-            [SerializeField]
-            public float m_movingSpeedY;
+            movingSpeedY = _params.MovingSpeedY;
         }
     }
 }

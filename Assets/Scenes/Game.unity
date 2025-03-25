@@ -312,7 +312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Or press any key
+  m_text: Or press Space button
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -339,7 +339,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10.25
+  m_fontSize: 10.05
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -576,6 +576,7 @@ GameObject:
   - component: {fileID: 400910883}
   - component: {fileID: 400910884}
   - component: {fileID: 400910885}
+  - component: {fileID: 400910886}
   m_Layer: 0
   m_Name: GameCycle
   m_TagString: Untagged
@@ -630,6 +631,19 @@ MonoBehaviour:
   _startButton: {fileID: 403508393}
   _pauseButton: {fileID: 846704656}
   _resumeButton: {fileID: 1204390094}
+  _keyBoardInput: {fileID: 1134805362}
+--- !u!114 &400910886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400910882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2449c690ba16da746bfd74e2aa10bbde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &403508388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1100,8 +1114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPositions: {fileID: 7166351703523243261}
-  _character: {fileID: 809540891661548873, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
-    type: 3}
+  _character: {fileID: 4414282821800802397}
   _worldTransform: {fileID: 1683128698}
   _container: {fileID: 178513672}
   _prefab: {fileID: 559606060570185700, guid: 87fe189881a524806800482ac8eaaa83, type: 3}
@@ -3510,10 +3523,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5377a5d4caa94482972174d0a74ac4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_params:
-    m_startPositionY: 19
-    m_endPositionY: -38
-    m_movingSpeedY: 5
+  _params:
+    StartPositionY: 42
+    EndPositionY: -16
+    MovingSpeedY: 7
 --- !u!1 &4914023371208914563
 GameObject:
   m_ObjectHideFlags: 0
