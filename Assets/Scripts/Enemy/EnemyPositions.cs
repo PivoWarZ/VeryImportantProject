@@ -35,7 +35,6 @@ namespace ShootEmUp
         {
             var index = Random.Range(0, transforms.Length);
                 return transforms[index];
-
         }
 
         private Transform TakeFreeTransform(List<Transform> transforms)

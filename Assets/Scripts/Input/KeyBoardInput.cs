@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class KeyBoardInput : MonoBehaviour
 {
-
     public event Action OnShoot;
     public event Action<Vector2> OnKeyboardInputChanged;
+
     private void Update()
     {
         KeyBoardInputChanged();
@@ -30,7 +30,6 @@ public class KeyBoardInput : MonoBehaviour
         {
             MovePosition(Vector2.zero);
         }
-
     }
 
     public void Shoot()
@@ -43,4 +42,3 @@ public class KeyBoardInput : MonoBehaviour
         OnKeyboardInputChanged?.Invoke(direction);
     }
 }
-

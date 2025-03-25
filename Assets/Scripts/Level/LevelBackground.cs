@@ -5,20 +5,14 @@ namespace ShootEmUp
 {
     public sealed class LevelBackground : MonoBehaviour, IPauseGameListener, IResumeGameListener
     {
-        private float startPositionY;
-
-        private float endPositionY;
-
-        private float movingSpeedY;
-
-        private float positionX;
-
-        private float positionZ;
+        [SerializeField] private Params m_params;
 
         private Transform myTransform;
-
-        [SerializeField]
-        private Params m_params;
+        private float startPositionY;
+        private float endPositionY;
+        private float movingSpeedY;
+        private float positionX;
+        private float positionZ;
 
         private void Awake()
         {

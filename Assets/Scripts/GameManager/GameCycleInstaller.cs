@@ -1,25 +1,26 @@
-using ShootEmUp;
 using UnityEngine;
 
-public class GameCycleInstaller : MonoBehaviour
+namespace ShootEmUp
 {
-    [SerializeField] GameCycle _gameCycle;
-    [SerializeField] EnemyManager _enemyManager;
-    [SerializeField] InputManager _inputManager;
-    [SerializeField] BulletSystem _bulletSystem;
-    [SerializeField] LevelBackground _levelBackGround;
-    [SerializeField] StartButton _startButton;
-    [SerializeField] PauseButton _pauseButton;
-    [SerializeField] ResumeButton _resumeButton;
-    private void Start()
+    public class GameCycleInstaller : MonoBehaviour
     {
-        _gameCycle.AddGameListener(_enemyManager);
-        _gameCycle.AddGameListener(_inputManager);
-        _gameCycle.AddGameListener(_bulletSystem);
-        _gameCycle.AddGameListener(_levelBackGround);
-        _gameCycle.AddGameListener(_startButton);
-        _gameCycle.AddGameListener(_pauseButton);
-        _gameCycle.AddGameListener(_resumeButton);
-
+        [SerializeField] GameCycle _gameCycle;
+        [SerializeField] EnemyManager _enemyManager;
+        [SerializeField] InputManager _inputManager;
+        [SerializeField] BulletSystem _bulletSystem;
+        [SerializeField] LevelBackground _levelBackGround;
+        [SerializeField] StartButton _startButton;
+        [SerializeField] PauseButton _pauseButton;
+        [SerializeField] ResumeButton _resumeButton;
+        private void Start()
+        {
+            _gameCycle.AddGameListener(_enemyManager);
+            _gameCycle.AddGameListener(_inputManager);
+            _gameCycle.AddGameListener(_bulletSystem);
+            _gameCycle.AddGameListener(_levelBackGround);
+            _gameCycle.AddGameListener(_startButton);
+            _gameCycle.AddGameListener(_pauseButton);
+            _gameCycle.AddGameListener(_resumeButton);
+        }
     }
 }

@@ -5,15 +5,9 @@ namespace ShootEmUp
 {
     public sealed class InputManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener
     {
-
-        [SerializeField]
-        private MoveComponent _moveComponent;
-
-        [SerializeField]
-        private ShootComponent _shootComponent;
-
-        [SerializeField]
-        private KeyBoardInput _keyBoardInput;
+        [SerializeField] private MoveComponent _moveComponent;
+        [SerializeField] private ShootComponent _shootComponent;
+        [SerializeField] private KeyBoardInput _keyBoardInput;
 
         private void OnDisable()
         {
