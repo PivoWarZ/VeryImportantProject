@@ -2,21 +2,20 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class CharacterController : MonoBehaviour
+    public sealed class CharacterController : MonoBehaviour, IStartGameListener, IFinishGameListener
     {
         [SerializeField] private GameObject _character; 
         [SerializeField] private GameManager _gameManager;
+        private void OnCharacterDeath(GameObject _) => _gameManager.FinishGame();
 
-        private void OnEnable()
+        void IStartGameListener.OnStartGame()
         {
             _character.GetComponent<HitPointsComponent>().OnHitPointsEmpty += OnCharacterDeath;
         }
 
-        private void OnDisable()
+        void IFinishGameListener.OnFinishGame()
         {
             _character.GetComponent<HitPointsComponent>().OnHitPointsEmpty -= OnCharacterDeath;
         }
-
-        private void OnCharacterDeath(GameObject _) => _gameManager.FinishGame();
     }
 }
