@@ -35,10 +35,6 @@ namespace ShootEmUp
                 this.enemyPool.Enqueue(enemy);
             }
 
-            if (_spawnCount > _enemyPositions.GetAttackPosition().Count-1)
-            {
-                _spawnCount = _enemyPositions.GetAttackPosition().Count-1;
-            }
         }
 
         public GameObject SpawnEnemy()
@@ -48,16 +44,26 @@ namespace ShootEmUp
                 return null;
             }
 
-            enemy.transform.SetParent(this._worldTransform);
-
-            var spawnPosition = this._enemyPositions.RandomSpawnPosition();
-            enemy.transform.position = spawnPosition.position;
+            if (_enemyPositions.TryGetRandomAttackPosition(out Transform freeAttackPosition))
+            { 
             
-            var attackPosition = this._enemyPositions.RandomAttackPosition();
-            enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
+                enemy.transform.SetParent(this._worldTransform);
 
-            enemy.GetComponent<EnemyAttackAgent>().SetTarget(this._character);
-            return enemy;
+                var spawnPosition = this._enemyPositions.RandomSpawnPosition();
+
+                enemy.transform.position = spawnPosition.position;
+
+                var attackPosition = freeAttackPosition;
+
+                enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
+
+                enemy.GetComponent<EnemyAttackAgent>().SetTarget(this._character);
+
+                return enemy;
+            }
+
+            return null;
+
         }
 
         public void UnspawnEnemy(GameObject enemy)

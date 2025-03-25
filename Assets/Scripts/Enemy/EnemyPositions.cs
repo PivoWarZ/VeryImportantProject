@@ -13,16 +13,20 @@ namespace ShootEmUp
         [SerializeField]
         private List<Transform> attackPositions;
 
-        public List<Transform> GetAttackPosition() => attackPositions;
-
         public Transform RandomSpawnPosition()
         {
             return this.RandomTransform(this.spawnPositions);
         }
 
-        public Transform RandomAttackPosition()
+        public bool TryGetRandomAttackPosition(out Transform attackPosition)
         {
-            return this.RandomFreeTransform(this.attackPositions);
+            if (TryGetFreeTransform(attackPositions, out Transform freePosition))
+            { 
+                return attackPosition = freePosition; 
+            }
+
+            attackPosition = null;
+            return false;
         }
 
         private Transform RandomTransform(Transform[] transforms)
@@ -32,38 +36,44 @@ namespace ShootEmUp
 
         }
 
-        private Transform RandomFreeTransform(List<Transform> transforms)
+        private bool TryGetFreeTransform(List<Transform> transforms, out Transform freePosition)
         {
+            if (transforms.Count == 0)
+            {
+                return freePosition = null;
+            }
             var index = Random.Range(0, transforms.Count);
             RaycastHit2D hit = Physics2D.Raycast(transforms[index].position, -Vector3.forward, 1f);
             Debug.DrawRay(transforms[index].position, Vector2.up, Color.yellow, 5f);
             Debug.Log(hit.collider);
+
             if (!hit)
             {
-                return transforms[index];
+                freePosition = transforms[index];
+                transforms.Remove(transforms[index]);
+                Debug.Log(transforms.Count);
+                return freePosition;
             }
             else
             {
-                int count = 0;
-                while (hit)
+                foreach (var position in transforms)
                 {
-                    count++;
-                    Debug.Log("Count  =  " + count);
-                    Debug.Log("Index  =  " + index);
-                    index++;
+                    hit = Physics2D.Raycast(position.position, -Vector2.up, 1f);
+                    Debug.DrawRay(position.position, Vector2.up, Color.yellow, 5f);
 
-                    if (index >= transforms.Count-1)
-                    { 
-                        index = 0;
+                    if (!hit)
+                    {
+                        freePosition = position;
+                        transforms.Remove(position);
+                        Debug.Log(transforms.Count);
+                        return freePosition;
                     }
-
-                    hit = Physics2D.Raycast(transforms[index].position, -Vector3.forward, 1f);
                 }
 
-                return transforms[index];
             }
-
-
+            Debug.Log(transforms.Count);
+            return freePosition = null;
         }
+
     }
 }
