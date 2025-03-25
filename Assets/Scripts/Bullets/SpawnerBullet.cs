@@ -5,13 +5,12 @@ namespace ShootEmUp
     public class SpawnerBullet : MonoBehaviour
     {
         [SerializeField] private int _spawnCount;
-        [SerializeField] private Bullet _prefab;
+        [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private PoolContainer _poolContainer;
     
-
         private void Awake()
         {
-            CreateBulletPool(_spawnCount, _prefab, _poolContainer.transform);
+            CreateBulletPool(_spawnCount, _bulletPrefab, _poolContainer.transform);
         }
 
         private void CreateBulletPool(int initialCount, Bullet bulletPrefab, Transform pool)

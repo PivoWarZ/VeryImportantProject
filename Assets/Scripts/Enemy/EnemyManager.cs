@@ -6,20 +6,12 @@ namespace ShootEmUp
 {
     public sealed class EnemyManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener
     {
-        [SerializeField] 
-        private BulletConfig _bulletConfig;
-
-        [SerializeField]
-        private EnemyPool _enemyPool;
-
-        [SerializeField]
-        private BulletSystem _bulletSystem;
-
-        [SerializeField]
-        private float _spawnTime = 3f;
+        [SerializeField] private BulletConfig _bulletConfig;
+        [SerializeField] private EnemyPool _enemyPool;
+        [SerializeField] private BulletSystem _bulletSystem;
+        [SerializeField] private float _spawnTime = 3f;
 
         private readonly HashSet<GameObject> _activeEnemies = new();
-
         private int _hitPoints;
 
         private IEnumerator CourutineToSpawn()
@@ -28,11 +20,12 @@ namespace ShootEmUp
             {
                 yield return new WaitForSeconds(_spawnTime);
                 var enemy = this._enemyPool.SpawnEnemy();
+
                 if (enemy != null)
                 {
                     if (this._activeEnemies.Add(enemy))
                     {
-                        enemy.GetComponent<HitPointsComponent>().hpEmpty += this.OnDestroyed;
+                        enemy.GetComponent<HitPointsComponent>().OnHitPointsEmpty += this.OnDestroyed;
                         enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
                         _hitPoints = enemy.GetComponent<HitPointsComponent>().GetHitPoints();
                     }
@@ -42,14 +35,12 @@ namespace ShootEmUp
 
         private void OnDestroyed(GameObject enemy)
         {
-
             if (_activeEnemies.Remove(enemy))
             {
-                enemy.GetComponent<HitPointsComponent>().hpEmpty -= this.OnDestroyed;
+                enemy.GetComponent<HitPointsComponent>().OnHitPointsEmpty -= this.OnDestroyed;
                 enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
                 enemy.GetComponent<HitPointsComponent>().SetHitPoints(_hitPoints);
                 _enemyPool.UnspawnEnemy(enemy);
-
             }
         }
 
@@ -57,12 +48,12 @@ namespace ShootEmUp
         {
             _bulletSystem.FlyBulletBySample(new BulletSample
             {
-                isPlayer = false,
-                physicsLayer = (int)this._bulletConfig.physicsLayer,
-                color = _bulletConfig.color,
-                damage = this._bulletConfig.damage,
-                position = position,
-                velocity = direction * _bulletConfig.speed,
+                IsPlayer = false,
+                PhysicsLayer = (int)this._bulletConfig.PhysicsLayer,
+                Color = _bulletConfig.Color,
+                Damage = this._bulletConfig.Damage,
+                Position = position,
+                Velocity = direction * _bulletConfig.Speed,
             });
         }
 
@@ -73,7 +64,6 @@ namespace ShootEmUp
             StartCoroutine(CourutineToSpawn());
             yield return new WaitForSeconds(_spawnTime);
             _spawnTime = startTime;
-
         }
 
         void IStartGameListener.OnStartGame()

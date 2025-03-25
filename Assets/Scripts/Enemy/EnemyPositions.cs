@@ -5,33 +5,34 @@ namespace ShootEmUp
 {
     public sealed class EnemyPositions : MonoBehaviour
     {
-        [SerializeField]
-        private Transform[] spawnPositions;
-
-        [SerializeField]
-        private List<Transform> attackPositions;
+        [SerializeField] private Transform[] _spawnPositions;
+        [SerializeField] private List<Transform> _attackPositions;
 
         public Transform RandomSpawnPosition()
         {
-            return this.RandomTransform(this.spawnPositions);
+            return RandomTransform(_spawnPositions);
         }
 
         public bool TryGetRandomAttackPosition(out Transform attackPosition)
         {
-            if (GetFreeTransform(attackPositions, out Transform attackposition))
-            { 
-                return attackPosition = attackposition; 
+            attackPosition = TakeFreeTransform(_attackPositions);
+            Debug.Log(attackPosition);
+
+            if (attackPosition == null)
+            {
+                Debug.Log("FALSE");
+                return false;
             }
-
-            attackPosition = null;
-
-            return false;
+            else
+            {
+                Debug.Log("RETURN");
+                return true;
+            }
         }
 
         public void AddAttackPosition(Transform attackposition)
         {
-            attackPositions.Add(attackposition);
-            Debug.Log(attackPositions.Count);
+            _attackPositions.Add(attackposition);
         }
         private Transform RandomTransform(Transform[] transforms)
         {
@@ -40,20 +41,33 @@ namespace ShootEmUp
 
         }
 
-        private bool GetFreeTransform(List<Transform> transforms, out Transform attackPosition)
+        //private bool GetFreeTransform(List<Transform> transforms, out Transform attackPosition)
+        //{
+        //    if (transforms.Count == 0)
+        //    {
+        //        return attackPosition = null;
+        //    }
+
+        //    var index = Random.Range(0, transforms.Count);
+        //    attackPosition = transforms[index];
+        //    _attackPositions.Remove(transforms[index]);
+        //    return attackPosition;
+        //}
+
+
+        private Transform TakeFreeTransform(List<Transform> transforms)
         {
+            Transform position;
+
             if (transforms.Count == 0)
             {
-                return attackPosition = null;
+                return null;
             }
 
             var index = Random.Range(0, transforms.Count);
-            Debug.DrawRay(transforms[index].position, Vector2.up, Color.yellow, 5f);
-            attackPosition = transforms[index];
-            attackPositions.Remove(transforms[index]);
-            Debug.Log(attackPositions.Count);
-            return attackPosition;
+            position = transforms[index];
+            _attackPositions.Remove(transforms[index]);
+            return position;
         }
-
     }
 }

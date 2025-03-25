@@ -7,7 +7,7 @@ namespace ShootEmUp
     {
         [SerializeField] private Transform _poolContainer;
 
-        private readonly Queue<Bullet> _bulletPool = new();
+        private readonly Queue<Bullet> _bulletsPool = new();
         public Transform GetContainerTransform()
         {
             return this.transform;
@@ -15,14 +15,13 @@ namespace ShootEmUp
 
         public Bullet TryDequeueBulletInPool()
         {
-            _bulletPool.TryDequeue(out Bullet bullet);
-
+            _bulletsPool.TryDequeue(out Bullet bullet);
             return bullet;
         }
 
         public void AddBulletInPool(Bullet bullet)
         {
-            _bulletPool.Enqueue(bullet);
+            _bulletsPool.Enqueue(bullet);
         }
 
 

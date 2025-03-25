@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public struct BulletSample
-{
-    public Vector2 position;
-    public Vector2 velocity;
-    public Color color;
-    public int physicsLayer;
-    public int damage;
-    public bool isPlayer;
+namespace ShootEmUp
+{ 
+    public struct BulletSample
+    {
+         public Vector2 Position;
+         public Vector2 Velocity;
+         public Color Color;
+         public int PhysicsLayer;
+         public int Damage;
+         public bool IsPlayer;
+    }
+
 }

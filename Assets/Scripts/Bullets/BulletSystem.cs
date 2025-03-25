@@ -11,19 +11,19 @@ namespace ShootEmUp
         [SerializeField] private Transform _worldTransform;
         [SerializeField] private LevelBounds _bulletLevelBounds;
         
-        private readonly HashSet<Bullet> activeBullets = new();
-        private readonly List<Bullet> removeBulletList = new();
+        private readonly HashSet<Bullet> _activeBullets = new();
+        private readonly List<Bullet> _removeBulletsList = new();
         private void FixedUpdate()
         {
-            this.removeBulletList.Clear();
-            this.removeBulletList.AddRange(this.activeBullets);
+            _removeBulletsList.Clear();
+            _removeBulletsList.AddRange(_activeBullets);
 
-            for (int i = 0, count = this.removeBulletList.Count; i < count; i++)
+            for (int i = 0, count = _removeBulletsList.Count; i < count; i++)
             {
-                var bullet = this.removeBulletList[i];
-                if (!this._bulletLevelBounds.InBounds(bullet.transform.position))
+                var bullet = _removeBulletsList[i];
+                if (!_bulletLevelBounds.InBounds(bullet.transform.position))
                 {
-                    this.RemoveBullet(bullet);
+                    RemoveBullet(bullet);
                 }
             }
         }
@@ -33,36 +33,36 @@ namespace ShootEmUp
 
             if (bullet)
             {
-                bullet.transform.SetParent(this._worldTransform);
+                bullet.transform.SetParent(_worldTransform);
             }
             else
             {
-                bullet = Instantiate(this._bulletPrefab, this._worldTransform);
+                bullet = Instantiate(_bulletPrefab, _worldTransform);
             }
 
-            bullet.SetPosition(bulletSample.position);
-            bullet.SetColor(bulletSample.color);
-            bullet.SetPhysicsLayer(bulletSample.physicsLayer);
-            bullet.damage = bulletSample.damage;
-            bullet.isPlayer = bulletSample.isPlayer;
-            bullet.SetVelocity(bulletSample.velocity);
+            bullet.SetPosition(bulletSample.Position);
+            bullet.SetColor(bulletSample.Color);
+            bullet.SetPhysicsLayer(bulletSample.PhysicsLayer);
+            bullet.Damage = bulletSample.Damage;
+            bullet.IsPlayer = bulletSample.IsPlayer;
+            bullet.SetVelocity(bulletSample.Velocity);
 
-            if (this.activeBullets.Add(bullet))
+            if (_activeBullets.Add(bullet))
             {
-                bullet.OnCollisionEntered += this.OnBulletCollision;
+                bullet.OnCollisionEntered += OnBulletCollision;
             }
         }
         private void OnBulletCollision(Bullet bullet, Collision2D collision)
         {
             BulletUtils.DealDamage(bullet, collision.gameObject);
-            this.RemoveBullet(bullet);
+            RemoveBullet(bullet);
         }
 
         private void RemoveBullet(Bullet bullet)
         {
-            if (this.activeBullets.Remove(bullet))
+            if (_activeBullets.Remove(bullet))
             {
-                bullet.OnCollisionEntered -= this.OnBulletCollision;
+                bullet.OnCollisionEntered -= OnBulletCollision;
                 bullet.transform.SetParent(_poolContainer.GetContainerTransform());
                 _poolContainer.AddBulletInPool(bullet);
             }
@@ -70,7 +70,7 @@ namespace ShootEmUp
 
         void IResumeGameListener.OnResumeGame()
         {
-            foreach (var bullet in activeBullets)
+            foreach (var bullet in _activeBullets)
             {
                 bullet.GetComponent<Rigidbody2D>().simulated = true;
             }
@@ -78,7 +78,7 @@ namespace ShootEmUp
 
         void IPauseGameListener.OnPauseGame()
         {
-            foreach (var bullet in activeBullets)
+            foreach (var bullet in _activeBullets)
             {
                 bullet.GetComponent<Rigidbody2D>().simulated = false;
             }
