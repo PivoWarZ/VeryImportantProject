@@ -42,6 +42,7 @@ namespace ShootEmUp
 
         private void OnDestroyed(GameObject enemy)
         {
+
             if (_activeEnemies.Remove(enemy))
             {
                 enemy.GetComponent<HitPointsComponent>().hpEmpty -= this.OnDestroyed;

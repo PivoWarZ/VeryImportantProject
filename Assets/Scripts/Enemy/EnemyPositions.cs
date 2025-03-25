@@ -1,6 +1,4 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -20,15 +18,21 @@ namespace ShootEmUp
 
         public bool TryGetRandomAttackPosition(out Transform attackPosition)
         {
-            if (TryGetFreeTransform(attackPositions, out Transform freePosition))
+            if (GetFreeTransform(attackPositions, out Transform attackposition))
             { 
-                return attackPosition = freePosition; 
+                return attackPosition = attackposition; 
             }
 
             attackPosition = null;
+
             return false;
         }
 
+        public void AddAttackPosition(Transform attackposition)
+        {
+            attackPositions.Add(attackposition);
+            Debug.Log(attackPositions.Count);
+        }
         private Transform RandomTransform(Transform[] transforms)
         {
             var index = Random.Range(0, transforms.Length);
@@ -36,43 +40,19 @@ namespace ShootEmUp
 
         }
 
-        private bool TryGetFreeTransform(List<Transform> transforms, out Transform freePosition)
+        private bool GetFreeTransform(List<Transform> transforms, out Transform attackPosition)
         {
             if (transforms.Count == 0)
             {
-                return freePosition = null;
+                return attackPosition = null;
             }
+
             var index = Random.Range(0, transforms.Count);
-            RaycastHit2D hit = Physics2D.Raycast(transforms[index].position, -Vector3.forward, 1f);
             Debug.DrawRay(transforms[index].position, Vector2.up, Color.yellow, 5f);
-            Debug.Log(hit.collider);
-
-            if (!hit)
-            {
-                freePosition = transforms[index];
-                transforms.Remove(transforms[index]);
-                Debug.Log(transforms.Count);
-                return freePosition;
-            }
-            else
-            {
-                foreach (var position in transforms)
-                {
-                    hit = Physics2D.Raycast(position.position, -Vector2.up, 1f);
-                    Debug.DrawRay(position.position, Vector2.up, Color.yellow, 5f);
-
-                    if (!hit)
-                    {
-                        freePosition = position;
-                        transforms.Remove(position);
-                        Debug.Log(transforms.Count);
-                        return freePosition;
-                    }
-                }
-
-            }
-            Debug.Log(transforms.Count);
-            return freePosition = null;
+            attackPosition = transforms[index];
+            attackPositions.Remove(transforms[index]);
+            Debug.Log(attackPositions.Count);
+            return attackPosition;
         }
 
     }

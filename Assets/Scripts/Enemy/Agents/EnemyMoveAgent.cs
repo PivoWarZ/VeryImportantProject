@@ -9,15 +9,24 @@ namespace ShootEmUp
             get { return this.isReached; }
         }
 
+        public Transform AttackPosition
+        {
+            get { return attackPosition; }
+        }
+
         [SerializeField] private MoveComponent moveComponent;
 
         private Vector2 _destination;
+       
+        private Transform attackPosition;
 
         private bool isReached;
 
-        public void SetDestination(Vector2 endPoint)
+
+        public void SetDestination(Transform endPoint)
         {
-            this._destination = endPoint;
+            this._destination = endPoint.position;
+            attackPosition = endPoint;
             this.isReached = false;
         }
 
