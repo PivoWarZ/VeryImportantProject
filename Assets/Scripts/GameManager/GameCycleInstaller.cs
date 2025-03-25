@@ -13,6 +13,7 @@ namespace ShootEmUp
         [SerializeField] PauseButton _pauseButton;
         [SerializeField] ResumeButton _resumeButton;
         [SerializeField] KeyBoardInput _keyBoardInput;
+        [SerializeField] ShootComponent _shootComponent;
         private void Start()
         {
             _gameCycle.AddGameListener(_gameCycle);
@@ -24,6 +25,7 @@ namespace ShootEmUp
             _gameCycle.AddGameListener(_pauseButton);
             _gameCycle.AddGameListener(_resumeButton);
             _gameCycle.AddGameListener(_keyBoardInput);
+            _gameCycle.AddGameListener(_shootComponent);
         }
     }
 }

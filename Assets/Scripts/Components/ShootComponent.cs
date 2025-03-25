@@ -2,21 +2,29 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-        public class ShootComponent : MonoBehaviour
+        public class ShootComponent : MonoBehaviour, IFixedUpdateGameListener
         {
             [SerializeField] private BulletConfig _bulletConfig;
             [SerializeField] private BulletSystem _bulletSystem;
             [SerializeField] private WeaponComponent _weapon;
 
             private bool isFireRequired;
-            private void FixedUpdate()
+        void IFixedUpdateGameListener.OnFixedUpdate(float fixedDeltaTime)
+        {
+            if (isFireRequired)
             {
-                if (isFireRequired)
-                {
-                    OnFlyBullet();
-                    isFireRequired = false;
-                }
+                OnFlyBullet();
+                isFireRequired = false;
             }
+        }
+            //private void FixedUpdate()
+            //{
+            //    if (isFireRequired)
+            //    {
+            //        OnFlyBullet();
+            //        isFireRequired = false;
+            //    }
+            //}
 
             private void OnFlyBullet()
             {
@@ -35,5 +43,6 @@ namespace ShootEmUp
             { 
                 isFireRequired = true;
             }
-        }   
+
+    }   
 }
