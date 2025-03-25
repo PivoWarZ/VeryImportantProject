@@ -15,6 +15,7 @@ namespace ShootEmUp
            NotStarted,
            StartGame,
            PauseGame,
+           FinishGame,
         }
 
         Cycle CurrentGameCycle;
@@ -145,6 +146,20 @@ namespace ShootEmUp
                 if (gameListener is IResumeGameListener resumeGameListener)
                 { 
                     resumeGameListener.OnResumeGame();
+                }
+            }
+        }
+
+        public void FinishGame()
+        {
+            Debug.Log("FinishGame");
+            CurrentGameCycle = Cycle.FinishGame;
+
+            foreach (IGameIistener gameListener in _gameListeners)
+            {
+                if (gameListener is IFinishGameListener finishGameListener)
+                {
+                    finishGameListener.OnFinishGame();
                 }
             }
         }
