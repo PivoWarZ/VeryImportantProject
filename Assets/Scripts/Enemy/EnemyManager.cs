@@ -19,14 +19,14 @@ namespace ShootEmUp
             while (true)
             {
                 yield return new WaitForSeconds(_spawnTime);
-                var enemy = this._enemyPool.SpawnEnemy();
+                var enemy = _enemyPool.SpawnEnemy();
 
                 if (enemy != null)
                 {
-                    if (this._activeEnemies.Add(enemy))
+                    if (_activeEnemies.Add(enemy))
                     {
-                        enemy.GetComponent<HitPointsComponent>().OnHitPointsEmpty += this.OnDestroyed;
-                        enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
+                        enemy.GetComponent<HitPointsComponent>().OnHitPointsEmpty += OnDestroyed;
+                        enemy.GetComponent<EnemyAttackAgent>().OnFire += OnFire;
                         _hitPoints = enemy.GetComponent<HitPointsComponent>().GetHitPoints();
                     }
                 }
@@ -37,8 +37,8 @@ namespace ShootEmUp
         {
             if (_activeEnemies.Remove(enemy))
             {
-                enemy.GetComponent<HitPointsComponent>().OnHitPointsEmpty -= this.OnDestroyed;
-                enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
+                enemy.GetComponent<HitPointsComponent>().OnHitPointsEmpty -= OnDestroyed;
+                enemy.GetComponent<EnemyAttackAgent>().OnFire -= OnFire;
                 enemy.GetComponent<HitPointsComponent>().SetHitPoints(_hitPoints);
                 _enemyPool.UnspawnEnemy(enemy);
             }
@@ -49,9 +49,9 @@ namespace ShootEmUp
             _bulletSystem.FlyBulletBySample(new BulletSample
             {
                 IsPlayer = false,
-                PhysicsLayer = (int)this._bulletConfig.PhysicsLayer,
+                PhysicsLayer = (int)_bulletConfig.PhysicsLayer,
                 Color = _bulletConfig.Color,
-                Damage = this._bulletConfig.Damage,
+                Damage = _bulletConfig.Damage,
                 Position = position,
                 Velocity = direction * _bulletConfig.Speed,
             });
@@ -77,7 +77,7 @@ namespace ShootEmUp
 
             foreach (var enemy in _activeEnemies)
             {
-                enemy.GetComponent<EnemyAttackAgent>().OnFire -= this.OnFire;
+                enemy.GetComponent<EnemyAttackAgent>().OnFire -= OnFire;
                 enemy.GetComponent<Rigidbody2D>().simulated = false;
             }
         }
@@ -88,7 +88,7 @@ namespace ShootEmUp
 
             foreach (var enemy in _activeEnemies)
             {
-                enemy.GetComponent<EnemyAttackAgent>().OnFire += this.OnFire;
+                enemy.GetComponent<EnemyAttackAgent>().OnFire += OnFire;
                 enemy.GetComponent<Rigidbody2D>().simulated = true;
             }
         }
