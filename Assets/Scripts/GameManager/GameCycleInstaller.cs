@@ -18,7 +18,6 @@ namespace ShootEmUp
         [SerializeField] Canvas _canvas;
         private void Start()
         {
-            _gameCycle.AddGameListener(_gameCycle);
             _gameCycle.AddGameListener(_enemyManager);
             _gameCycle.AddGameListener(_inputManager);
             _gameCycle.AddGameListener(_bulletSystem);

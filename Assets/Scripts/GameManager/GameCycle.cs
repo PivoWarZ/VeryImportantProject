@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public class GameCycle : MonoBehaviour, IUpdateGameListener
+    public class GameCycle : MonoBehaviour
     {
         private List<IGameIistener> _gameListeners = new();
         private List<IUpdateGameListener> _updateGameListeners = new();
@@ -20,9 +20,9 @@ namespace ShootEmUp
 
         Cycle CurrentGameCycle;
 
-        private void Update()
+       public void GameUpdate(float deltaTime)
         {
-            float deltaTime = Time.deltaTime;
+            GameCycleInput();
 
             foreach (var gameListener in _updateGameListeners)
             {
@@ -30,29 +30,20 @@ namespace ShootEmUp
             }
         }
 
-        private void FixedUpdate()
+        public void GameFixedUpdate(float fixedDeltaTime)
         {
-            float fixeddeltaTime = Time.fixedDeltaTime;
-
             foreach (var gameListener in _fixedUpdateGameListeners)
             {
-                gameListener.OnFixedUpdate(fixeddeltaTime);
+                gameListener.OnFixedUpdate(fixedDeltaTime);
             }
         }
 
-        private void LateUpdate()
+        public void GameLateUpdate(float deltaTime)
         {
-            float deltaTime = Time.deltaTime;
-
             foreach (var gameListener in _lateUpdateGameListeners)
             {
                 gameListener.OnLateUpdate(deltaTime);
             }
-        }
-
-        void IUpdateGameListener.OnUpdate(float deltaTime)
-        {
-            GameCycleInput();
         }
 
         private void GameCycleInput()
