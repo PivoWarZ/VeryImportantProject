@@ -15,6 +15,10 @@ namespace ShootEmUp
         [SerializeField] private int _startContdown = 3;
         [SerializeField] private float _waitTime = 1;
 
+        private void Awake()
+        {
+            _startButton.gameObject.SetActive(true);
+        }
         public void Countdown()
         {
             _startButton.gameObject.SetActive(false);
@@ -30,7 +34,7 @@ namespace ShootEmUp
                 yield return new WaitForSeconds(_waitTime);
                 _startContdown--;
             }
-            _countdown.text = "Ready";
+            _countdown.text = "Ready!";
             GameReady?.Invoke();
             yield return new WaitForSeconds(_waitTime);
             _countdown.gameObject.SetActive(false);

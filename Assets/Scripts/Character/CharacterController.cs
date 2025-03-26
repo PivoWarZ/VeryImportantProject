@@ -6,6 +6,7 @@ namespace ShootEmUp
     {
         [SerializeField] private GameObject _character; 
         [SerializeField] private GameManager _gameManager;
+
         private void OnCharacterDeath(GameObject gameObject)
         {
             _gameManager.FinishGame(gameObject);

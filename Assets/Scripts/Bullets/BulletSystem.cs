@@ -5,7 +5,6 @@ namespace ShootEmUp
 {
     public sealed class BulletSystem : MonoBehaviour, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener, IFinishGameListener
     {
-
         [SerializeField] private PoolContainer _poolContainer;
         [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private Transform _worldTransform;

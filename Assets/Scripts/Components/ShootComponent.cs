@@ -2,38 +2,38 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-        public class ShootComponent : MonoBehaviour, IFixedUpdateGameListener
+    public class ShootComponent : MonoBehaviour, IFixedUpdateGameListener
+    {
+        [SerializeField] private BulletConfig _bulletConfig;
+        [SerializeField] private BulletSystem _bulletSystem;
+        [SerializeField] private WeaponComponent _weapon;
+
+        private bool isFireRequired;
+        void IFixedUpdateGameListener.OnFixedUpdate(float fixedDeltaTime)
         {
-            [SerializeField] private BulletConfig _bulletConfig;
-            [SerializeField] private BulletSystem _bulletSystem;
-            [SerializeField] private WeaponComponent _weapon;
-
-            private bool isFireRequired;
-            void IFixedUpdateGameListener.OnFixedUpdate(float fixedDeltaTime)
+            if (isFireRequired)
             {
-                if (isFireRequired)
-                {
-                    OnFlyBullet();
-                    isFireRequired = false;
-                }
+                OnFlyBullet();
+                isFireRequired = false;
             }
+        }
 
-            private void OnFlyBullet()
+        private void OnFlyBullet()
+        {
+            _bulletSystem.FlyBulletBySample(new BulletSample
             {
-                _bulletSystem.FlyBulletBySample(new BulletSample
-                {
-                    IsPlayer = true,
-                    PhysicsLayer = (int)_bulletConfig.PhysicsLayer,
-                    Color = _bulletConfig.Color,
-                    Damage = _bulletConfig.Damage,
-                    Position = _weapon.Position,
-                    Velocity = _weapon.Rotation * Vector3.up * _bulletConfig.Speed
-                });
-            }
+                IsPlayer = true,
+                PhysicsLayer = (int)_bulletConfig.PhysicsLayer,
+                Color = _bulletConfig.Color,
+                Damage = _bulletConfig.Damage,
+                Position = _weapon.Position,
+                Velocity = _weapon.Rotation * Vector3.up * _bulletConfig.Speed
+            });
+        }
 
-            public void Shoot()
-            { 
-                isFireRequired = true;
-            }
-        }   
+        public void Shoot()
+        {
+            isFireRequired = true;
+        }
+    }
 }
