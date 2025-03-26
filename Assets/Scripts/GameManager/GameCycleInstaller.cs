@@ -16,6 +16,8 @@ namespace ShootEmUp
         [SerializeField] ShootComponent _shootComponent;
         [SerializeField] CharacterController _characterController;
         [SerializeField] Canvas _canvas;
+        [SerializeField] GameCycleInput _gameCycleInput;
+        [SerializeField] GameCycleController _gameCycleController;
         private void Start()
         {
             _gameCycle.AddGameListener(_enemyManager);
@@ -29,6 +31,8 @@ namespace ShootEmUp
             _gameCycle.AddGameListener(_shootComponent);
             _gameCycle.AddGameListener(_characterController);
             _gameCycle.AddGameListener(_canvas);
+            _gameCycle.AddGameListener(_gameCycleInput);
+            _gameCycle.AddGameListener(_gameCycleController);
         }
     }
 }
