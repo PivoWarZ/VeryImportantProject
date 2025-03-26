@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed partial class LevelBackground : MonoBehaviour, IPauseGameListener, IResumeGameListener
+    public sealed partial class LevelBackground : MonoBehaviour, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener
     {
         [SerializeField] private Params _params;
 
@@ -24,7 +24,7 @@ namespace ShootEmUp
             positionZ = position.z;
         }
 
-        private void FixedUpdate()
+        void IFixedUpdateGameListener.OnFixedUpdate(float fixedDeltaTime)
         {
             if (myTransform.position.y <= endPositionY)
             {

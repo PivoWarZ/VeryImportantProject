@@ -632,6 +632,7 @@ MonoBehaviour:
   _pauseButton: {fileID: 846704656}
   _resumeButton: {fileID: 1204390094}
   _keyBoardInput: {fileID: 1134805362}
+  _shootComponent: {fileID: 4414282821800802414}
 --- !u!114 &400910886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3343,7 +3344,7 @@ PrefabInstance:
     - target: {fileID: 3926786964091724599, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
         type: 3}
       propertyPath: _hitPoints
-      value: 5
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4249531304039814043, guid: 9699e7e809fd44b2bbf3d30c951ecbd2,
         type: 3}

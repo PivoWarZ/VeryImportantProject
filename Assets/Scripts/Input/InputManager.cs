@@ -1,18 +1,12 @@
-using System;
 using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class InputManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener
+    public sealed class InputManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener, IFinishGameListener
     {
         [SerializeField] private MoveComponent _moveComponent;
         [SerializeField] private ShootComponent _shootComponent;
         [SerializeField] private KeyBoardInput _keyBoardInput;
-
-        private void OnDisable()
-        {
-            OutControl();
-        }
 
         void IPauseGameListener.OnPauseGame()
         {
@@ -27,6 +21,10 @@ namespace ShootEmUp
         void IStartGameListener.OnStartGame()
         {
             TakeControl();
+        }
+        void IFinishGameListener.OnFinishGame()
+        {
+           OutControl();
         }
 
         private void TakeControl()
