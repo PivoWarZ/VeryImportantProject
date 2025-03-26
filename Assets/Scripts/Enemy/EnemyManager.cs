@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class EnemyManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener
+    public sealed class EnemyManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener, IFinishGameListener
     {
         [SerializeField] private BulletConfig _bulletConfig;
         [SerializeField] private EnemyPool _enemyPool;
@@ -100,6 +100,17 @@ namespace ShootEmUp
                 enemy.GetComponent<EnemyAttackAgent>().OnFixedUpdate(fixedDeltaTime);
                 enemy.GetComponent<EnemyMoveAgent>().OnFixedUpdate(fixedDeltaTime);
             };
+        }
+
+        void IFinishGameListener.OnFinishGame()
+        {
+            StopAllCoroutines();
+
+            foreach (var enemy in _activeEnemies)
+            {
+                enemy.GetComponent<EnemyAttackAgent>().OnFire -= OnFire;
+                enemy.GetComponent<Rigidbody2D>().simulated = false;
+            }
         }
     }
 }

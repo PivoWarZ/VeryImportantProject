@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed class BulletSystem : MonoBehaviour, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener
+    public sealed class BulletSystem : MonoBehaviour, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener, IFinishGameListener
     {
 
         [SerializeField] private PoolContainer _poolContainer;
@@ -87,5 +87,14 @@ namespace ShootEmUp
             }
         }
 
+        void IFinishGameListener.OnFinishGame()
+        {
+            foreach (var bullet in _activeBullets)
+            {
+                bullet.OnCollisionEntered -= OnBulletCollision;
+                bullet.transform.SetParent(_poolContainer.GetContainerTransform());
+                _poolContainer.AddBulletInPool(bullet);
+            }
+        }
     }
 }

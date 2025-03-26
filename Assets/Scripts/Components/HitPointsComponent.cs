@@ -20,7 +20,7 @@ namespace ShootEmUp
 
             if (_hitPoints <= 0)
             {
-                OnHitPointsEmpty?.Invoke(gameObject);
+                OnHitPointsEmpty?.Invoke(this.gameObject);
             }
         }
 

@@ -22,7 +22,6 @@ namespace ShootEmUp
 
         private void Update()
         {
-
             float deltaTime = Time.deltaTime;
 
             foreach (var gameListener in _updateGameListeners)
@@ -50,6 +49,7 @@ namespace ShootEmUp
                 gameListener.OnLateUpdate(deltaTime);
             }
         }
+
         void IUpdateGameListener.OnUpdate(float deltaTime)
         {
             GameCycleInput();

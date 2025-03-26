@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace ShootEmUp
 {
-    public sealed partial class LevelBackground : MonoBehaviour, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener
+    public sealed partial class LevelBackground : MonoBehaviour, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener, IFinishGameListener
     {
         [SerializeField] private Params _params;
 
@@ -23,6 +23,7 @@ namespace ShootEmUp
             positionX = position.x;
             positionZ = position.z;
         }
+
 
         void IFixedUpdateGameListener.OnFixedUpdate(float fixedDeltaTime)
         {
@@ -50,6 +51,11 @@ namespace ShootEmUp
         void IResumeGameListener.OnResumeGame()
         {
             movingSpeedY = _params.MovingSpeedY;
+        }
+
+        void IFinishGameListener.OnFinishGame()
+        {
+            movingSpeedY = 0;
         }
     }
 }

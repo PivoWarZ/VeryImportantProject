@@ -4,10 +4,12 @@ namespace ShootEmUp
 {
     public sealed class GameManager : MonoBehaviour
     {
-        public void FinishGame()
+        [SerializeField] GameCycle _gameCycle;
+        public void FinishGame(GameObject gameObject)
         {
             Debug.Log("Game over!");
-            Time.timeScale = 0;
+            _gameCycle.FinishGame();
+            gameObject.SetActive(false);
         }
     }
 }
