@@ -715,9 +715,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3bbafc073a6134b80170a8055ae611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnCount: 50
   _prefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d, type: 3}
   _poolContainer: {fileID: 1831741370}
+  _spawnCount: 50
 --- !u!4 &1693528826
 Transform:
   m_ObjectHideFlags: 0
@@ -789,7 +789,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1879759789}
   - component: {fileID: 1879759790}
-  - component: {fileID: 1879759791}
   m_Layer: 0
   m_Name: CharacterController
   m_TagString: Untagged
@@ -825,19 +824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _character: {fileID: 4414282821800802397}
-  _gameManager: {fileID: 1879759791}
---- !u!114 &1879759791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879759788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 697fe7ba192e484db495320b9c01bcd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  _gameManager: {fileID: 3951702117947426123}
 --- !u!1 &61006797492197339
 GameObject:
   m_ObjectHideFlags: 0
