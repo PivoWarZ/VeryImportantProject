@@ -54,12 +54,12 @@ namespace ShootEmUp
         {
             _bulletSystem.FlyBulletBySample(new BulletSample
             {
-                isPlayer = false,
-                physicsLayer = (int)this._bulletConfig.physicsLayer,
-                color = _bulletConfig.color,
-                damage = this._bulletConfig.damage,
-                position = position,
-                velocity = direction * _bulletConfig.speed,
+                IsPlayer = false,
+                PhysicsLayer = (int)this._bulletConfig.PhysicsLayer,
+                Color = _bulletConfig.Color,
+                Damage = this._bulletConfig.Damage,
+                Position = position,
+                Velocity = direction * _bulletConfig.Speed,
             });
         }
     }

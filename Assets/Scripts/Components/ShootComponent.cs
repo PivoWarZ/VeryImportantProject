@@ -21,12 +21,12 @@ namespace ShootEmUp
     {
         _bulletSystem.FlyBulletBySample(new BulletSample
         {
-            isPlayer = true,
-            physicsLayer = (int)this._bulletConfig.physicsLayer,
-            color = this._bulletConfig.color,
-            damage = this._bulletConfig.damage,
-            position = _weapon.Position,
-            velocity = _weapon.Rotation * Vector3.up * this._bulletConfig.speed
+            IsPlayer = true,
+            PhysicsLayer = (int)this._bulletConfig.PhysicsLayer,
+            Color = this._bulletConfig.Color,
+            Damage = this._bulletConfig.Damage,
+            Position = _weapon.Position,
+            Velocity = _weapon.Rotation * Vector3.up * this._bulletConfig.Speed
         });
 
     }

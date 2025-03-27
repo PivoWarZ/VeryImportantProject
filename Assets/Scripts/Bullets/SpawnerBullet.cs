@@ -4,10 +4,9 @@ namespace ShootEmUp
 {
     public class SpawnerBullet : MonoBehaviour
     {
-        [SerializeField] private int _spawnCount;
         [SerializeField] private Bullet _prefab;
         [SerializeField] private PoolContainer _poolContainer;
-    
+        [SerializeField] private int _spawnCount;
 
         private void Awake()
         {
@@ -22,7 +21,5 @@ namespace ShootEmUp
                 _poolContainer.AddBulletInPool(bullet);
             }
         }
-
-
     }
 }
