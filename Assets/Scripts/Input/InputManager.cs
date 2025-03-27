@@ -1,4 +1,3 @@
-using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -7,11 +6,8 @@ namespace ShootEmUp
     {
         public float HorizontalDirection { get; private set; }
 
-        [SerializeField]
-        private GameObject _character;
-
-        [SerializeField]
-        private ShootComponent _shootComponent;
+        [SerializeField] private GameObject _character;
+        [SerializeField] private ShootComponent _shootComponent;
 
         private void Update()
         {
@@ -22,21 +18,21 @@ namespace ShootEmUp
 
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                this.HorizontalDirection = -Vector3.right.x;
+                HorizontalDirection = -Vector3.right.x;
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
-                this.HorizontalDirection = Vector3.right.x;
+                HorizontalDirection = Vector3.right.x;
             }
             else
             {
-                this.HorizontalDirection = 0;
+                HorizontalDirection = 0;
             }
         }
         
         private void FixedUpdate()
         {
-            this._character.GetComponent<MoveComponent>().MoveByRigidbodyVelocity(new Vector2(this.HorizontalDirection, 0) * Time.fixedDeltaTime);
+            _character.GetComponent<MoveComponent>().MoveByRigidbodyVelocity(new Vector2(HorizontalDirection, 0) * Time.fixedDeltaTime);
         }
     }
 }
