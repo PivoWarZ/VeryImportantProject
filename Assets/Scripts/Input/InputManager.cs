@@ -7,6 +7,7 @@ namespace ShootEmUp
     {
         public event Action <Vector2> OnInputChanged;
         public event Action OnShootKeyDown;
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))

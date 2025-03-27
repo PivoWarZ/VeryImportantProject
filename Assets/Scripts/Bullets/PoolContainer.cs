@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -21,6 +20,7 @@ namespace ShootEmUp
         {
             return _worldTransform;
         }
+
         public Bullet GetBulletInPool()
         {
             if (_bulletsPool.TryDequeue(out Bullet bullet))
@@ -32,7 +32,6 @@ namespace ShootEmUp
                 bullet = Instantiate(_bulletPrefab, _worldTransform);
                 return bullet;
             }
-
         }
 
         public void AddBulletInPool(Bullet bullet)

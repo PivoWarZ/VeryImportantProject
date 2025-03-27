@@ -14,6 +14,7 @@ namespace ShootEmUp
         { 
             IsFireRequired = true;
         }
+
         private void FixedUpdate()
         {
             if (IsFireRequired)

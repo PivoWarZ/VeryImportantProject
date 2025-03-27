@@ -18,5 +18,4 @@ public class InputController : MonoBehaviour
         _inputManager.OnShootKeyDown -= _shootComponent.NeedShoot;
         _inputManager.OnInputChanged -= _moveComponent.MoveByRigidbodyVelocity;
     }
-
 }
