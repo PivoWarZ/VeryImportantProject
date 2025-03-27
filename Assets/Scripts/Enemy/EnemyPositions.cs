@@ -4,20 +4,17 @@ namespace ShootEmUp
 {
     public sealed class EnemyPositions : MonoBehaviour
     {
-        [SerializeField]
-        private Transform[] spawnPositions;
-
-        [SerializeField]
-        private Transform[] attackPositions;
+        [SerializeField] private Transform[] _spawnPositions;
+        [SerializeField] private Transform[] _attackPositions;
 
         public Transform RandomSpawnPosition()
         {
-            return this.RandomTransform(this.spawnPositions);
+            return RandomTransform(_spawnPositions);
         }
 
         public Transform RandomAttackPosition()
         {
-            return this.RandomTransform(this.attackPositions);
+            return RandomTransform(_attackPositions);
         }
 
         private Transform RandomTransform(Transform[] transforms)
