@@ -11,11 +11,6 @@ namespace ShootEmUp
 
         private void KeybordInput()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                OnStartGame?.Invoke();
-            }
-
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 OnPauseGame?.Invoke();
