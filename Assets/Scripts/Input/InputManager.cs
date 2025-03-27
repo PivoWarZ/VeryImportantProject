@@ -17,7 +17,7 @@ namespace ShootEmUp
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                _shootComponent.isFireRequired = true;
+                _shootComponent.IsFireRequired = true;
             }
 
             if (Input.GetKey(KeyCode.LeftArrow))
