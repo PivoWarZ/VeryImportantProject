@@ -1,12 +1,11 @@
+using System;
 using UnityEngine;
 
 namespace ShootEmUp
 {
     public sealed class EnemyAttackAgent : MonoBehaviour
     {
-        public delegate void FireHandler(GameObject enemy, Vector2 position, Vector2 direction);
-
-        public event FireHandler OnFire;
+        public event Action <GameObject, Vector2, Vector2> OnFire;
 
         [SerializeField] private WeaponComponent _weaponComponent;
         [SerializeField] private EnemyMoveAgent _moveAgent;

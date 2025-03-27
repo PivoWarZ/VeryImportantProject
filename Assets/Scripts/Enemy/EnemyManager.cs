@@ -42,7 +42,6 @@ namespace ShootEmUp
                 enemy.GetComponent<EnemyAttackAgent>().OnFire -= OnFire;
                 enemy.GetComponent<HitPointsComponent>().SetHitPoints(_hitPoints);
                 _enemyPool.UnspawnEnemy(enemy);
-
             }
         }
 

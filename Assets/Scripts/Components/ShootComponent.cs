@@ -10,7 +10,6 @@ namespace ShootEmUp
         [SerializeField] private BulletSystem _bulletSystem;
         [SerializeField] private WeaponComponent _weapon;
 
-
         private void FixedUpdate()
         {
             if (IsFireRequired)
