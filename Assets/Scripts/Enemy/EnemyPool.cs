@@ -7,7 +7,7 @@ namespace ShootEmUp
     {
         [Header("Spawn")]
         [SerializeField] private EnemyPositions _enemyPositions;
-        [SerializeField] private GameObject _character;
+        [SerializeField] private HitPointsComponent _characterHitComponent;
         [SerializeField] private Transform _worldTransform;
 
         [Header("Pool")]
@@ -38,7 +38,7 @@ namespace ShootEmUp
             enemy.transform.SetParent(_worldTransform);
             enemy.transform.position = spawnPosition.position;
             enemy.GetComponent<EnemyMoveAgent>().SetDestination(attackPosition.position);
-            enemy.GetComponent<EnemyAttackAgent>().SetTarget(_character);
+            enemy.GetComponent<EnemyAttackAgent>().SetTarget(_characterHitComponent);
             return enemy;
         }
 

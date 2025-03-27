@@ -7,8 +7,6 @@ namespace ShootEmUp
     {
 
         [SerializeField] private PoolContainer _poolContainer;
-        [SerializeField] private Bullet _bulletPrefab;
-        [SerializeField] private Transform _worldTransform;
         [SerializeField] private LevelBounds _bulletLevelBounds;
         
         private readonly HashSet<Bullet> _activeBullets = new();
@@ -32,17 +30,8 @@ namespace ShootEmUp
 
         public void FlyBulletBySample(BulletSample bulletSample)
         {
-            var bullet = _poolContainer.TryDequeueBulletInPool();
-
-            if (bullet)
-            {
-                bullet.transform.SetParent(_worldTransform);
-            }
-            else
-            {
-                bullet = Instantiate(_bulletPrefab, _worldTransform);
-            }
-
+            var bullet = _poolContainer.GetBulletInPool();
+            bullet.transform.SetParent(_poolContainer.GetWorldTransform());
             bullet.SetPosition(bulletSample.Position);
             bullet.SetColor(bulletSample.Color);
             bullet.SetPhysicsLayer(bulletSample.PhysicsLayer);

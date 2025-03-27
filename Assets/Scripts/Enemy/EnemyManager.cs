@@ -26,7 +26,7 @@ namespace ShootEmUp
                 {
                     if (_activeEnemies.Add(enemy))
                     {
-                        enemy.GetComponent<HitPointsComponent>().OnHpEmpty += OnDestroyed;
+                        enemy.GetComponent<HitPointsComponent>().OnHitPointsOver += OnDestroyed;
                         enemy.GetComponent<EnemyAttackAgent>().OnFire += OnFire;
                         _hitPoints = enemy.GetComponent<HitPointsComponent>().GetHitPoints();
                     }    
@@ -38,7 +38,7 @@ namespace ShootEmUp
         {
             if (_activeEnemies.Remove(enemy))
             {
-                enemy.GetComponent<HitPointsComponent>().OnHpEmpty -= OnDestroyed;
+                enemy.GetComponent<HitPointsComponent>().OnHitPointsOver -= OnDestroyed;
                 enemy.GetComponent<EnemyAttackAgent>().OnFire -= OnFire;
                 enemy.GetComponent<HitPointsComponent>().SetHitPoints(_hitPoints);
                 _enemyPool.UnspawnEnemy(enemy);

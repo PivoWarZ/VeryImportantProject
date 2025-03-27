@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace ShootEmUp
@@ -6,6 +7,8 @@ namespace ShootEmUp
     public class PoolContainer : MonoBehaviour
     {
         [SerializeField] private Transform _poolContainer;
+        [SerializeField] private Bullet _bulletPrefab;
+        [SerializeField] private Transform _worldTransform;
 
         private readonly Queue<Bullet> _bulletsPool = new();
 
@@ -14,10 +17,22 @@ namespace ShootEmUp
             return this.transform;
         }
 
-        public Bullet TryDequeueBulletInPool()
+        public Transform GetWorldTransform()
         {
-            _bulletsPool.TryDequeue(out Bullet bullet);
-            return bullet;
+            return _worldTransform;
+        }
+        public Bullet GetBulletInPool()
+        {
+            if (_bulletsPool.TryDequeue(out Bullet bullet))
+            {
+                return bullet;
+            }
+            else
+            {
+                bullet = Instantiate(_bulletPrefab, _worldTransform);
+                return bullet;
+            }
+
         }
 
         public void AddBulletInPool(Bullet bullet)
