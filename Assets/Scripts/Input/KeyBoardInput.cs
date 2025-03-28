@@ -1,46 +1,51 @@
 using ShootEmUp;
 using System;
 using UnityEngine;
+using Zenject;
 
-public class KeyBoardInput : MonoBehaviour, IUpdateGameListener
-{
-    public event Action OnShoot;
-    public event Action<Vector2> OnKeyboardInputChanged;
-
-    void IUpdateGameListener.OnUpdate(float deltaTime)
+namespace ShootEmUp
+{ 
+    public partial class KeyBoardInput : MonoBehaviour, IUpdateGameListener
     {
-        KeyBoardInputChanged();
-    }
+        public event Action OnShoot;
+        public event Action<Vector2> OnKeyboardInputChanged;
 
-    private void KeyBoardInputChanged()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        [Inject] IkeyBoardInputConfig _keyBoardConfig;
+
+        void IUpdateGameListener.OnUpdate(float deltaTime)
         {
-            Shoot();
+            KeyBoardInputChanged();
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        private void KeyBoardInputChanged()
         {
-            MovePosition(-Vector2.right * Time.fixedDeltaTime);
+            if (Input.GetKeyDown(_keyBoardConfig.Shoot))
+            {
+                Shoot();
+            }
+
+            if (Input.GetKey(_keyBoardConfig.Left))
+            {
+                MovePosition(-Vector2.right * Time.fixedDeltaTime);
+            }
+            else if (Input.GetKey(_keyBoardConfig.Right))
+            {
+                MovePosition(Vector2.right * Time.fixedDeltaTime);
+            }
+            else
+            {
+                MovePosition(Vector2.zero);
+            }
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+
+        public void Shoot()
         {
-            MovePosition(Vector2.right * Time.fixedDeltaTime);
+            OnShoot?.Invoke();
         }
-        else
+
+        public void MovePosition(Vector2 direction)
         {
-            MovePosition(Vector2.zero);
+            OnKeyboardInputChanged?.Invoke(direction);
         }
     }
-
-    public void Shoot()
-    {
-        OnShoot?.Invoke();
-    }
-
-    public void MovePosition(Vector2 direction)
-    {
-        OnKeyboardInputChanged?.Invoke(direction);
-    }
-
 }
