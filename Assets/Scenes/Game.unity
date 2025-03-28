@@ -425,9 +425,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolContainer: {fileID: 1831741370}
-  _bulletPrefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d,
-    type: 3}
-  _worldTransform: {fileID: 1683128698}
   _bulletLevelBounds: {fileID: 2572952653776768186}
 --- !u!1 &400910882
 GameObject:
@@ -2652,6 +2649,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _poolContainer: {fileID: 1831741369}
+  _bulletPrefab: {fileID: 201757604187811891, guid: 5fe72886874b4e445b06cf777ca4920d,
+    type: 3}
+  _worldTransform: {fileID: 1683128698}
 --- !u!1 &1839699267
 GameObject:
   m_ObjectHideFlags: 0
