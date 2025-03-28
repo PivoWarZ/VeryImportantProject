@@ -994,7 +994,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dae85f8264479bac19d85418d92392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bulletConfig: {fileID: 11400000, guid: 6ec332bf90ee3ea4dbb28d67e7ff19b5, type: 2}
   _enemyPool: {fileID: 562298207}
   _bulletSystem: {fileID: 363245577}
   _spawnTime: 1
@@ -2977,7 +2976,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _countdown: {fileID: 2086717886}
   _startButton: {fileID: 403508390}
-  _startContdown: 3
+  _startContdown: 0
   _waitTime: 1
 --- !u!1 &2024614496
 GameObject:

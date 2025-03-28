@@ -16,3 +16,4 @@ MonoBehaviour:
     _shoot: 32
     _left: 276
     _right: 275
+  _playerBullet: {fileID: 11400000, guid: 7138ae5d32d814e0ca50c616c65ea105, type: 2}

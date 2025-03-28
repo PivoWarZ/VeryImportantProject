@@ -8,10 +8,11 @@ namespace ShootEmUp
     public partial class ConfigInstaller : ScriptableObjectInstaller<ConfigInstaller>
     {
         [SerializeField] InputConfig _keyBoardInputConfig;
+        [SerializeField] BulletConfig _playerBullet;
         public override void InstallBindings()
         {
             Container.Bind<IkeyBoardInputConfig>().To<InputConfig>().FromInstance(_keyBoardInputConfig).AsSingle();
-            //Container.Bind<ScriptableObject>().To
+            Container.Bind<BulletConfig>().FromInstance(_playerBullet).AsSingle();
         }
     }
 }
