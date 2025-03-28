@@ -11,10 +11,10 @@ namespace ShootEmUp
         [SerializeField] private EnemyMoveAgent _moveAgent;
         [SerializeField] private float _countdown;
 
-        private GameObject _target;
+        private HitPointsComponent _target;
         private float _currentTime;
 
-        public void SetTarget(GameObject target)
+        public void SetTarget(HitPointsComponent target)
         {
             _target = target;
         }
