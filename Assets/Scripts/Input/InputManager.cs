@@ -1,12 +1,13 @@
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
     public sealed class InputManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener, IFinishGameListener
     {
-        [SerializeField] private MoveComponent _moveComponent;
-        [SerializeField] private ShootComponent _shootComponent;
-        [SerializeField] private KeyBoardInput _keyBoardInput;
+        [Inject] private MoveComponent _moveComponent;
+        [Inject] private ShootComponent _shootComponent;
+        [Inject] private KeyBoardInput _keyBoardInput;
 
         void IPauseGameListener.OnPauseGame()
         {
