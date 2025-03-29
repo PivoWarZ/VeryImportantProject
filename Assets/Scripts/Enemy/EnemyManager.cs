@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
     public sealed class EnemyManager : MonoBehaviour, IStartGameListener, IPauseGameListener, IResumeGameListener, IFixedUpdateGameListener, IFinishGameListener
     {
-        [SerializeField] private BulletConfig _bulletConfig;
+        [Inject] private BulletConfig _bulletConfig;
         [SerializeField] private EnemyPool _enemyPool;
         [SerializeField] private BulletSystem _bulletSystem;
         [SerializeField] private float _spawnTime = 3f;

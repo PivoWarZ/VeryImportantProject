@@ -4,7 +4,7 @@ using UnityEngine;
 using Zenject;
 
 [CreateAssetMenu(fileName = "ConfigInstaller", menuName = "Installers/ConfigInstaller")]
-public class ConfigInstaller : ScriptableObjectInstaller<ConfigInstaller>
+public class InputInstaller : ScriptableObjectInstaller<InputInstaller>
 {
     [SerializeField] InputConfig _keyBoardInputConfig;
     public override void InstallBindings()

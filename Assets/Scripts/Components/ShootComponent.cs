@@ -1,10 +1,11 @@
 using UnityEngine;
+using Zenject;
 
 namespace ShootEmUp
 {
     public class ShootComponent : MonoBehaviour, IFixedUpdateGameListener
     {
-        [SerializeField] private BulletConfig _bulletConfig;
+        [Inject] private BulletConfig _bulletConfig;
         [SerializeField] private BulletSystem _bulletSystem;
         [SerializeField] private WeaponComponent _weapon;
 
